@@ -8,7 +8,6 @@ package uk.ac.diamond.ss;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
@@ -68,8 +67,7 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         people.clear();
         String[] names = new String[]{"Ginger", "Ginger"};
         for (String name : names) {
-            Person p = new Person();
-            p.setId(UUID.randomUUID().toString());
+            Person p = new Person(name);
             p.setName(name);
             people.add(p);
         }

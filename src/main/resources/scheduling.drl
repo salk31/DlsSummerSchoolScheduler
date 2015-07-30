@@ -9,8 +9,7 @@ global HardSoftLongScoreHolder scoreHolder;
 
 rule "sameName"
     when
-        ps1 : Person()
-        ps2 : Person(ps1.id < id, name == ps1.name)
+        ps1 : Person(name == 'Ginger')
     then
     scoreHolder.addHardConstraintMatch(kcontext, -2);
 end

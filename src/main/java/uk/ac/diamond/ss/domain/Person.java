@@ -18,16 +18,13 @@ import uk.ac.diamond.ss.DodgyDifficultyWeightFactory;
 @PlanningEntity(difficultyWeightFactoryClass = DodgyDifficultyWeightFactory.class)
 public class Person {
 
-    private String id;
-
     private String name;
 
-    public String getId() {
-        return id;
+    public Person() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Person(String name) {
+        this.name = name;
     }
 
     @PlanningVariable(valueRangeProviderRefs = "names")
@@ -41,7 +38,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return id + " " + name;
+        return name;
     }
 
     // TODO __ read in people/preferences
