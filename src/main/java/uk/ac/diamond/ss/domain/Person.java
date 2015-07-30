@@ -44,4 +44,8 @@ public class Person {
         return id + " " + name;
     }
 
+    // TODO __ read in people/preferences
+    // TODO __ read in timetable
+    // TODO __ write out timetable
+    // TODO __ preferences Map or Join?
 }
