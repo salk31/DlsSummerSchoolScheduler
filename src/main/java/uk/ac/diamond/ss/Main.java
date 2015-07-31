@@ -5,7 +5,9 @@ import java.io.InputStream;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.optaplanner.core.api.solver.Solver;
 
+import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.PersonReader;
 
 public class Main {
@@ -19,7 +21,20 @@ public class Main {
         InputStream inputStream = new FileInputStream(filename);
         Workbook wb = WorkbookFactory.create(inputStream);
         PersonReader pr = new PersonReader(wb.getSheet("candidate_preferences"));
-        System.out.println("X=" + pr.read());
+
+        PlannerEngine pe = new PlannerEngine();
+        Solver solver = pe.getSolver();
+
+
+        PlannerSolution prob = new PlannerSolution();
+        prob.setPeople(pr.read());
+
+        solver.solve(prob);
+
+        PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
+        for (Person p : ps.getPeople()) {
+            System.out.println("X=" + p);
+        }
     }
 
 }

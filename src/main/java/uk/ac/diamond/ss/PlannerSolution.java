@@ -52,6 +52,10 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         return people;
     }
 
+    public void setPeople(List<Person> people) {
+        this.people = people;
+    }
+
 
     @ValueRangeProvider(id = "names")
     public List<String> getNames() {
@@ -61,16 +65,4 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
 
         return names;
     }
-
-
-    public void start() {
-        people.clear();
-        String[] names = new String[]{"Ginger", "Ginger"};
-        for (String name : names) {
-            Person p = new Person(name);
-            p.setName(name);
-            people.add(p);
-        }
-    }
-
 }

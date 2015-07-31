@@ -45,7 +45,13 @@ public class PlannerTest  {
 
 
         PlannerSolution prob = new PlannerSolution();
-        prob.start();
+
+        String[] names = new String[]{"Ginger", "Ginger"};
+        for (String name : names) {
+            Person p = new Person(name);
+            p.setName(name);
+            prob.getPeople().add(p);
+        }
 
         ScoreDirector guiScoreDirector = solver.getScoreDirectorFactory().buildScoreDirector();
         guiScoreDirector.setWorkingSolution(prob);
