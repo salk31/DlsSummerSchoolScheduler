@@ -9,6 +9,7 @@ import org.optaplanner.core.api.solver.Solver;
 
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.PersonReader;
+import uk.ac.diamond.ss.domain.ShiftReader;
 
 public class Main {
 
@@ -22,18 +23,21 @@ public class Main {
         Workbook wb = WorkbookFactory.create(inputStream);
         PersonReader pr = new PersonReader(wb.getSheet("candidate_preferences"));
 
+        ShiftReader sr = new ShiftReader();
+
         PlannerEngine pe = new PlannerEngine();
         Solver solver = pe.getSolver();
 
 
         PlannerSolution prob = new PlannerSolution();
         prob.setPeople(pr.read());
+        prob.setShifts(sr.load());
 
         solver.solve(prob);
 
         PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
         for (Person p : ps.getPeople()) {
-            System.out.println("X=" + p);
+            System.out.println("X = " + p);
         }
     }
 

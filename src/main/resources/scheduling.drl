@@ -1,7 +1,7 @@
 dialect "java"
 
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
-import uk.ac.diamond.ss.domain.Person;
+import uk.ac.diamond.ss.domain.Shift;
 
 import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
@@ -9,7 +9,7 @@ global HardSoftLongScoreHolder scoreHolder;
 
 rule "sameName"
     when
-        ps1 : Person(name == 'Ginger')
+        ps2 : Shift( ID == 1)
     then
-    scoreHolder.addHardConstraintMatch(kcontext, -2);
+    scoreHolder.addHardConstraintMatch(kcontext, +2);
 end

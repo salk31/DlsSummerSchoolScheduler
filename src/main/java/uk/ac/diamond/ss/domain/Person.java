@@ -1,21 +1,16 @@
 /*
  * Diamond User Administration System
- * Copyright © 2015 Diamond Light Source Ltd
+ * Copyright ï¿½ 2015 Diamond Light Source Ltd
  */
 
 package uk.ac.diamond.ss.domain;
-
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
-import org.optaplanner.core.api.domain.variable.PlanningVariable;
-
-import uk.ac.diamond.ss.DodgyDifficultyWeightFactory;
 
 /**
  *
  *
  * @author yjs77802
  */
-@PlanningEntity(difficultyWeightFactoryClass = DodgyDifficultyWeightFactory.class)
+
 public class Person {
 
     private String name;
@@ -27,7 +22,7 @@ public class Person {
         this.name = name;
     }
 
-    @PlanningVariable(valueRangeProviderRefs = "names")
+   // @PlanningVariable(valueRangeProviderRefs = "names")
     public String getName() {
         return name;
     }

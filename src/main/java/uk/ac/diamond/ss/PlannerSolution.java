@@ -11,19 +11,25 @@ import java.util.List;
 
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
+import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
+import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 
 import uk.ac.diamond.ss.domain.Person;
+import uk.ac.diamond.ss.domain.Shift;
 
 /**
  * A candidate solution to the scheduling problem.
  */
 @PlanningSolution
+
 public class PlannerSolution implements org.optaplanner.core.api.domain.solution.Solution<HardSoftLongScore> {
 
 
     private List<Person> people = new ArrayList<Person>();
+
+    private List<Shift> shifts = new ArrayList<Shift>();
 
     private List facts  = new ArrayList();
 
@@ -47,7 +53,6 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         this.score = p;
     }
 
-    @PlanningEntityCollectionProperty
     public List<Person> getPeople() {
         return people;
     }
@@ -56,13 +61,19 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         this.people = people;
     }
 
-
-    @ValueRangeProvider(id = "names")
-    public List<String> getNames() {
-        List<String> names = new ArrayList<String>();
-        names.add("Fred");
-        names.add("Ginger");
-
-        return names;
+  @PlanningEntityCollectionProperty
+    public List<Shift> getShifts() {
+        return shifts;
     }
+
+    public void setShifts(List<Shift> sh) {
+        this.shifts = sh;
+    }
+
+    @ValueRangeProvider(id = "shiftIDs")
+    //Instead of a Collection, you can also return a ValueRange or CountableValueRange, build by the ValueRangeFactory:
+    public CountableValueRange<Integer> getShiftIDs() {
+        return ValueRangeFactory.createIntValueRange(1, shifts.size());//2*15 number of bemalines
+    }
+
 }
