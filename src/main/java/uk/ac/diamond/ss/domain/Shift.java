@@ -5,15 +5,10 @@
 
 package uk.ac.diamond.ss.domain;
 
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
-import org.optaplanner.core.api.domain.variable.PlanningVariable;
-
-import uk.ac.diamond.ss.DodgyDifficultyWeightFactory;
-
-@PlanningEntity(difficultyWeightFactoryClass = DodgyDifficultyWeightFactory.class)
 public class Shift {
 
     private int ID;
+
 public Shift(){
 }
 
@@ -21,7 +16,6 @@ public Shift(){
         ID =ID;
     }
 
-   @PlanningVariable(valueRangeProviderRefs = "shiftIDs")
     public int getID() {
         return ID;
     }
@@ -31,7 +25,7 @@ public Shift(){
     }
 
     //TODO
-    //Day, type, beamline
+    //Day, time, beamline
 
 
 }

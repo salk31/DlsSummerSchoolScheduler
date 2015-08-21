@@ -22,7 +22,6 @@ public class Person {
         this.name = name;
     }
 
-   // @PlanningVariable(valueRangeProviderRefs = "names")
     public String getName() {
         return name;
     }

@@ -1,15 +1,24 @@
 dialect "java"
 
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
-import uk.ac.diamond.ss.domain.Shift;
+import uk.ac.diamond.ss.domain.Allocation;
 
 import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;
 
-rule "sameName"
+rule "sameAllocation"
     when
-        ps2 : Shift( ID == 1)
+    	pa1 : Allocation(getShift() != null)
+		pa2 : Allocation(ID> pa1.ID, getShift().getID() == pa1.getShift().getID(),getPerson().getName().equals(pa1.getPerson().getName()))
     then
-    scoreHolder.addHardConstraintMatch(kcontext, +2);
+    scoreHolder.addHardConstraintMatch(kcontext, -5);
+end
+
+rule "differentShifts"
+    when
+    	pa1 : Allocation(getShift() != null)
+		pa2 : Allocation(ID> pa1.ID, getShift().getID() != pa1.getShift().getID(),!getPerson().getName().equals(pa1.getPerson().getName()))
+    then
+    scoreHolder.addHardConstraintMatch(kcontext, +5);
 end

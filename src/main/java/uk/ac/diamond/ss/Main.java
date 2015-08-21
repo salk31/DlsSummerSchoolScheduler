@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.optaplanner.core.api.solver.Solver;
 
-import uk.ac.diamond.ss.domain.Person;
+import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.PersonReader;
 import uk.ac.diamond.ss.domain.ShiftReader;
 
@@ -32,12 +32,13 @@ public class Main {
         PlannerSolution prob = new PlannerSolution();
         prob.setPeople(pr.read());
         prob.setShifts(sr.load());
-
+        prob.setAllocations();
+        System.out.println("Solver start!");
         solver.solve(prob);
 
         PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
-        for (Person p : ps.getPeople()) {
-            System.out.println("X = " + p);
+        for (Allocation p : ps.getAllocations()) {
+            System.out.println("Person: " + p.getPerson() + " shift: " + p.getShift().getID());
         }
     }
 
