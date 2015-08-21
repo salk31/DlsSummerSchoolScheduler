@@ -25,11 +25,11 @@ import uk.ac.diamond.ss.domain.Shift;
 
 public class PlannerSolution implements org.optaplanner.core.api.domain.solution.Solution<HardSoftLongScore> {
 
-
+//Problem facts
     private List<Person> people = new ArrayList<Person>();
 
     private List<Shift> shifts = new ArrayList<Shift>();
-
+  //Problem entities
     private List<Allocation> allocations = new ArrayList<Allocation>();
 
     private List facts  = new ArrayList();
@@ -41,8 +41,11 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
 
     @Override
     public Collection<? extends Object> getProblemFacts() {
+        facts.addAll(people);
+        facts.addAll(shifts);
         return facts;
     }
+
 
     @Override
     public HardSoftLongScore getScore() {
@@ -76,6 +79,10 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         return allocations;
     }
 
+    public void setAllocations(List<Allocation> list) {
+        this.allocations = list;
+    }
+
     public void setAllocations() {
         this.allocations = createAllocationList();
     }
@@ -91,7 +98,7 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
             alloList.add(allocation);
         }
         return alloList;
-
     }
+
 
 }

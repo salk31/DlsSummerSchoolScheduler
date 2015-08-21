@@ -7,14 +7,10 @@ package uk.ac.diamond.ss.domain;
 
 public class Shift {
 
-    private int ID;
+    private int ID  =0;
 
 public Shift(){
 }
-
-    public Shift(int ID) {
-        ID =ID;
-    }
 
     public int getID() {
         return ID;

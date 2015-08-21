@@ -10,7 +10,7 @@ global HardSoftLongScoreHolder scoreHolder;
 rule "sameAllocation"
     when
     	pa1 : Allocation(getShift() != null)
-		pa2 : Allocation(ID> pa1.ID, getShift().getID() == pa1.getShift().getID(),getPerson().getName().equals(pa1.getPerson().getName()))
+		pa2 : Allocation(ID> pa1.ID, getShift().getID() == pa1.getShift().getID())
     then
     scoreHolder.addHardConstraintMatch(kcontext, -5);
 end
@@ -18,7 +18,8 @@ end
 rule "differentShifts"
     when
     	pa1 : Allocation(getShift() != null)
-		pa2 : Allocation(ID> pa1.ID, getShift().getID() != pa1.getShift().getID(),!getPerson().getName().equals(pa1.getPerson().getName()))
+		pa2 : Allocation(ID> pa1.ID, getShift().getID() != pa1.getShift().getID())
+		pa3 : Allocation(ID> pa2.ID, ID> pa1.ID, getShift().getID() != pa1.getShift().getID(),getShift().getID() != pa2.getShift().getID())
     then
     scoreHolder.addHardConstraintMatch(kcontext, +5);
 end

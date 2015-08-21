@@ -12,8 +12,16 @@ public class ShiftReader{
 
     public List<Shift> load() {
         List<Shift> result = new ArrayList<Shift>();
-        result.add(new Shift(1));
-        result.add(new Shift(2));
+        Shift one = new Shift();
+        one.setID(10);
+        Shift two = new Shift();
+        two.setID(20);
+        Shift three = new Shift();
+        two.setID(20);
+        three.setID(3);
+        result.add(one);
+        result.add(two);
+        result.add(three);
         return result;
     }
 

@@ -33,6 +33,7 @@ public class Main {
         prob.setPeople(pr.read());
         prob.setShifts(sr.load());
         prob.setAllocations();
+
         System.out.println("Solver start!");
         solver.solve(prob);
 

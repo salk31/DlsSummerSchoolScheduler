@@ -41,7 +41,7 @@ public class Allocation {
         sh = aSh;
     }
 
-    @PlanningVariable(valueRangeProviderRefs = "shifts")
+    @PlanningVariable(valueRangeProviderRefs = {"shifts"})
     public Shift getShift(){
         return sh;
     }
