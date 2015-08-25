@@ -29,6 +29,7 @@ public class Allocation {
            ID = i;
     }
 
+    //@PlanningVariable(valueRangeProviderRefs = {"people"})
     public Person getPerson(){
         return p;
     }

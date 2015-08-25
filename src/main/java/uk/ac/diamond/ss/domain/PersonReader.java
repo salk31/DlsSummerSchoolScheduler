@@ -1,6 +1,6 @@
 /*
  * Diamond User Administration System
- * Copyright © 2015 Diamond Light Source Ltd
+ * Copyright ï¿½ 2015 Diamond Light Source Ltd
  */
 
 package uk.ac.diamond.ss.domain;
@@ -39,6 +39,7 @@ public class PersonReader {
             Row row = sheet.getRow(r);
             String name = row.getCell(0).getStringCellValue();
             Person person = new Person(name);
+            person.setID(r);
             result.add(person);
 
             for (short c = 1; c <= row.getLastCellNum(); c++) {

@@ -29,6 +29,9 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
     private List<Person> people = new ArrayList<Person>();
 
     private List<Shift> shifts = new ArrayList<Shift>();
+
+    private int shiftsPerStudent = 2;//move to project variabels
+
   //Problem entities
     private List<Allocation> allocations = new ArrayList<Allocation>();
 
@@ -57,6 +60,7 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         this.score = p;
     }
 
+    //@ValueRangeProvider(id = "people")
     public List<Person> getPeople() {
         return people;
     }
@@ -90,12 +94,14 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
     private List<Allocation> createAllocationList(){
         int id = 0;
         List<Allocation> alloList = new ArrayList<Allocation>();
+        for(int i = 0; i< shiftsPerStudent; i++){
         for(Person p: getPeople()){
             Allocation allocation = new Allocation();
             allocation.setPerson(p);
             allocation.setID(id);
             id++;
             alloList.add(allocation);
+        }
         }
         return alloList;
     }

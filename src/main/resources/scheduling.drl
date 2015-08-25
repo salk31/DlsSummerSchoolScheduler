@@ -7,19 +7,51 @@ import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;
 
-rule "sameAllocation"
+rule "groupSize"
     when
-    	pa1 : Allocation(getShift() != null)
-		pa2 : Allocation(ID> pa1.ID, getShift().getID() == pa1.getShift().getID())
+    	a1 : Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
+    	$total : Number() from accumulate(
+    		$a : Allocation(ID>= $aid, getShift().getID() == $ashiftID), 
+    		count($a)
+    	)
+    then
+    scoreHolder.addHardConstraintMatch(kcontext,2-$total.intValue());//should be 5 if 5 per group is max preferred
+end
+
+rule "noOverlappingAllocations"
+    when
+    	a1 : Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
+    	a : Allocation(ID> $aid, getShift().checkOverlap($ashift), getPerson().getID() == $aPersonID )
     then
     scoreHolder.addHardConstraintMatch(kcontext, -5);
 end
-
-rule "differentShifts"
+	
+	rule "noSimilarSesssions"
     when
-    	pa1 : Allocation(getShift() != null)
-		pa2 : Allocation(ID> pa1.ID, getShift().getID() != pa1.getShift().getID())
-		pa3 : Allocation(ID> pa2.ID, ID> pa1.ID, getShift().getID() != pa1.getShift().getID(),getShift().getID() != pa2.getShift().getID())
+    	a1 : Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
+    	a : Allocation(ID> $aid, getShift().checkIfSimilar($ashift), getPerson().getID() == $aPersonID )
     then
-    scoreHolder.addHardConstraintMatch(kcontext, +5);
+    scoreHolder.addSoftConstraintMatch(kcontext, -1);//use correlation degree instead of -1
 end
+
+rule "preferencesSoft"
+    when
+    	$totalPreferences : Number() from accumulate(
+    		$a : Allocation(getShift() != null, getPerson() != null, $preference: getPerson().checkPreference(getShift())),
+    		sum($preference)
+    	)
+    then
+    scoreHolder.addSoftConstraintMatch(kcontext, $totalPreferences.intValue()-9);//maximal sum of preferences given
+end
+
+rule "preferencesHard"
+   when
+   	a1 : Allocation($aid : ID, getPerson() != null, $aPersonID : getPerson().getID())
+  	$totalAll : Number(intValue < 2) from accumulate(
+   		$a : Allocation(ID>=$aid,getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, getPerson().isPreference(getShift())),
+    		count($a)
+   	)
+   then
+   scoreHolder.addHardConstraintMatch(kcontext, $totalAll.intValue()-1);//at least one preference
+end
+	
