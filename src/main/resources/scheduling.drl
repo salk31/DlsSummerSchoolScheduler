@@ -2,14 +2,14 @@ dialect "java"
 
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
 import uk.ac.diamond.ss.domain.Allocation;
-
+import uk.ac.diamond.ss.domain.Person;
 import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;
 
 rule "groupSize"
     when
-    	a1 : Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
+    	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
     	$total : Number() from accumulate(
     		$a : Allocation(ID>= $aid, getShift().getID() == $ashiftID), 
     		count($a)
@@ -20,24 +20,32 @@ end
 
 rule "noOverlappingAllocations"
     when
-    	a1 : Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
-    	a : Allocation(ID> $aid, getShift().checkOverlap($ashift), getPerson().getID() == $aPersonID )
+    	 Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
+    	 Allocation(ID> $aid, getShift().checkOverlap($ashift), getPerson().getID() == $aPersonID )
     then
     scoreHolder.addHardConstraintMatch(kcontext, -5);
 end
 	
 	rule "noSimilarSesssions"
     when
-    	a1 : Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
-    	a : Allocation(ID> $aid, getShift().checkIfSimilar($ashift), getPerson().getID() == $aPersonID )
+    	Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
+    	Allocation(ID> $aid, getShift().checkIfSimilar($ashift), getPerson().getID() == $aPersonID )
     then
     scoreHolder.addSoftConstraintMatch(kcontext, -1);//use correlation degree instead of -1
+end
+
+rule "longExperimentsSingle"
+    when
+    	Allocation(getShift() != null, $ashift : getShift(), getShift().isLong(), getPerson() != null, $aPersonID : getPerson().getID())
+   		not Allocation(getShift() != null, getPerson() != null, getShift().checkIfLong($ashift), getPerson().getID() == $aPersonID)
+ then
+    scoreHolder.addHardConstraintMatch(kcontext, -5);
 end
 
 rule "preferencesSoft"
     when
     	$totalPreferences : Number() from accumulate(
-    		$a : Allocation(getShift() != null, getPerson() != null, $preference: getPerson().checkPreference(getShift())),
+    		Allocation(getShift() != null, getPerson() != null, $preference: getPerson().checkPreference(getShift())),
     		sum($preference)
     	)
     then
@@ -46,12 +54,10 @@ end
 
 rule "preferencesHard"
    when
-   	a1 : Allocation($aid : ID, getPerson() != null, $aPersonID : getPerson().getID())
-  	$totalAll : Number(intValue < 2) from accumulate(
-   		$a : Allocation(ID>=$aid,getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, getPerson().isPreference(getShift())),
-    		count($a)
-   	)
+   		Person($aPersonID : getID())
+		not Allocation(getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, getPerson().isPreference(getShift()))
    then
-   scoreHolder.addHardConstraintMatch(kcontext, $totalAll.intValue()-1);//at least one preference
+   scoreHolder.addHardConstraintMatch(kcontext, -1);//at least one preference
 end
+
 	

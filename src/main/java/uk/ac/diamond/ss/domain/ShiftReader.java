@@ -36,8 +36,8 @@ public class ShiftReader{
         four.setStartTime(16);
         four.setEndTime(18);
 
-     /*   three.addLongExperiment(four);
-        four.addLongExperiment(three);*/
+        three.addLongExperiment(four);
+        four.addLongExperiment(three);
 
         result.add(one);
         result.add(two);

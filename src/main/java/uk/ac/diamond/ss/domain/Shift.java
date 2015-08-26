@@ -16,6 +16,7 @@ public class Shift {
     private List<Shift> longExperiment = new ArrayList<Shift>();
     private int eTime;
     private Facility facility ;
+    private boolean isLong = false;
 
     public Shift(){
     }
@@ -49,6 +50,8 @@ public class Shift {
         return false;
     }
 public void addLongExperiment(Shift s){
+    setLong();
+    s.setLong();
     if(!longExperiment.contains(s)){
         longExperiment.add(s);
     }
@@ -59,6 +62,14 @@ public void addLongExperiment(Shift s){
             return true;
         }
         return false;
+    }
+
+    public boolean isLong(){
+        return isLong;
+    }
+
+    public void setLong(){
+        isLong=true;
     }
 
 
