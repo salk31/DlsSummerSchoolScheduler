@@ -18,7 +18,7 @@ public class Person {
 
     private String name;
     private int ID;
-    private Map<Shift,Integer> preferences = new HashMap<Shift,Integer>();
+    private Map<Facility,Integer> preferences = new HashMap<Facility,Integer>();
 
     public Person() {
     }
@@ -48,43 +48,53 @@ public class Person {
         return name;
     }
 
-    public Map<Shift,Integer> getPreferences(){
+    public Map<Facility,Integer> getPreferences(){
         return preferences;
     }
 
+    public void setPereferences(Map<Facility, Integer> pref) {
+        preferences = pref;
+    }
+
     public int checkPreference(Shift s){
-    /*    if(preferences.containsKey(s)){
-            return preferences.get(s);
-        }*/
-        if(s.getID()==4 && name.equals("Ginger")){
-            return 5;
-        }
-        if(s.getID()==3 && name.equals("Tom")){
-            return 4;
+        Facility k = s.getFacility();
+        if(preferences.containsKey(k)){
+            return preferences.get(k);
         }
         return 0;
     }
 
     public boolean isPreference(Shift s){
-        if(s.getID()== 3 && name.equals("Tom")){
-            return true;
-        }
-        if(s.getID()== 4 && name.equals("Tom")){
-            return true;
-        }
-        if(s.getID()==4 && name.equals("Ginger")){
-            return true;
-        }
-        if(s.getID()==20 && name.equals("Bugs Bunny")){
-            return true;
-        }
-        return false;
-       // return preferences.containsKey(s);
+       return preferences.containsKey(s.getFacility());
     }
 
+    private boolean shifFacility(Facility f, Shift s){
+        if(s.getFacility().getName().equals(f)){
+            return true;
+        }
+       return false;
+    }
 
+    /* if(s.getID()==4 && name.equals("Ginger")){
+    return 5;
+}
+if(s.getID()==3 && name.equals("Tom")){
+    return 4;
+}*/
 
-    // TODO __ read in people/preferences
+    /*   if(s.getID()== 3 && name.equals("Tom")){
+    return true;
+}
+if(s.getID()== 4 && name.equals("Tom")){
+    return true;
+}
+if(s.getID()==4 && name.equals("Ginger")){
+    return true;
+}
+if(s.getID()==20 && name.equals("Bugs Bunny")){
+    return true;
+}
+return false;*/
     // TODO __ read in timetable
     // TODO __ write out timetable
     // TODO __ preferences Map or Join?

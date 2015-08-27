@@ -8,8 +8,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.optaplanner.core.api.solver.Solver;
 
 import uk.ac.diamond.ss.domain.Allocation;
-import uk.ac.diamond.ss.domain.PersonReader;
-import uk.ac.diamond.ss.domain.ShiftReader;
+import uk.ac.diamond.ss.domain.readers.PersonReader;
+import uk.ac.diamond.ss.domain.readers.ShiftReader;
 
 public class Main {
 
@@ -23,7 +23,7 @@ public class Main {
         Workbook wb = WorkbookFactory.create(inputStream);
         PersonReader pr = new PersonReader(wb.getSheet("candidate_preferences"));
 
-        ShiftReader sr = new ShiftReader();
+        ShiftReader sr = new ShiftReader(wb.getSheet("periods"));
 
         PlannerEngine pe = new PlannerEngine();
         Solver solver = pe.getSolver();
@@ -32,6 +32,7 @@ public class Main {
         PlannerSolution prob = new PlannerSolution();
         prob.setPeople(pr.read());
         prob.setShifts(sr.load());
+        sr.read();
         prob.setAllocations();
 
         System.out.println("Solver start!");

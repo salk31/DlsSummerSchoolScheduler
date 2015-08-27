@@ -20,7 +20,7 @@ import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 
 import uk.ac.diamond.ss.domain.Person;
-import uk.ac.diamond.ss.domain.PersonReader;
+import uk.ac.diamond.ss.domain.readers.PersonReader;
 
 
 /**

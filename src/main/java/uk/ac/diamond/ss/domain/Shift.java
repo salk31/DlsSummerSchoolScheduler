@@ -49,13 +49,14 @@ public class Shift {
         }
         return false;
     }
-public void addLongExperiment(Shift s){
-    setLong();
-    s.setLong();
-    if(!longExperiment.contains(s)){
-        longExperiment.add(s);
+
+    public void addLongExperiment(Shift s){
+        setLong();
+        //s.setLong();
+        if(!longExperiment.contains(s)){
+            longExperiment.add(s);
+        }
     }
-}
 
     public boolean checkIfLong(Shift s){
         if(longExperiment.contains(s)){
@@ -72,9 +73,8 @@ public void addLongExperiment(Shift s){
         isLong=true;
     }
 
-
     public boolean checkOverlap(Shift s){
-        if((s.getStartTime()<= eTime && s.getStartTime()>=sTime ) || (s.getEndTime()>=sTime && s.getEndTime()<=eTime)){
+        if((s.getStartTime() <= eTime && s.getStartTime() >= sTime ) || (s.getEndTime() >= sTime && s.getEndTime() <= eTime)){
             return true;
         }
         return false;
@@ -88,7 +88,6 @@ public void addLongExperiment(Shift s){
         eTime = endTime;
     }
 
-
     public Facility getFacility() {
         return facility;
     }
@@ -96,6 +95,5 @@ public void addLongExperiment(Shift s){
     public void setFacility(Facility machine) {
         facility  = machine;
     }
-
 
 }

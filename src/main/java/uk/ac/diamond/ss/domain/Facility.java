@@ -1,6 +1,6 @@
 /*
  * Diamond User Administration System
- * Copyright © 2015 Diamond Light Source Ltd
+ * Copyright ï¿½ 2015 Diamond Light Source Ltd
  */
 
 package uk.ac.diamond.ss.domain;
@@ -23,8 +23,6 @@ public class Facility {
             fac = new Facility(name);
             facilityByName.put(name, fac);
         }
-
-
         return fac;
     }
 

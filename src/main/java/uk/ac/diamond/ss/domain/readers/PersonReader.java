@@ -3,14 +3,19 @@
  * Copyright � 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss.domain;
+package uk.ac.diamond.ss.domain.readers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import uk.ac.diamond.ss.domain.Facility;
+import uk.ac.diamond.ss.domain.Person;
 
 
 /**
@@ -29,7 +34,6 @@ public class PersonReader {
         // read first row for preference names
         Row firstRow = sheet.getRow(0);
         List<Facility> facs = new ArrayList<Facility>();
-
         for (short c = 1; c < firstRow.getLastCellNum(); c++) {
             Cell cell = firstRow.getCell(c);
             facs.add(Facility.getOrCreate(cell.getStringCellValue()));
@@ -40,14 +44,18 @@ public class PersonReader {
             String name = row.getCell(0).getStringCellValue();
             Person person = new Person(name);
             person.setID(r);
-            result.add(person);
 
-            for (short c = 1; c <= row.getLastCellNum(); c++) {
+            Map<Facility,Integer> preferences = new HashMap<Facility, Integer>();
+            for (short c = 1; c < row.getLastCellNum(); c++) {
                 Cell cell = row.getCell(c);
+                int preference = 0;
                 if (cell != null) {
-                    // TODO __ add preference
+                    preference = (int) cell.getNumericCellValue();
+                    preferences.put(facs.get(c-1),preference);
                 }
             }
+            person.setPereferences(preferences);
+            result.add(person);
         }
 
         return result;
