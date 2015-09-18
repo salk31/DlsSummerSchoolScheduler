@@ -36,7 +36,7 @@ public class PersonReader {
         List<Facility> facs = new ArrayList<Facility>();
         for (short c = 1; c < firstRow.getLastCellNum(); c++) {
             Cell cell = firstRow.getCell(c);
-            facs.add(Facility.getOrCreate(cell.getStringCellValue()));
+            facs.add(Facility.getOrCreate(cell.getStringCellValue(),c-1));
         }
         // read data rows
         for (short r = 1; r <=sheet.getLastRowNum(); r++) {

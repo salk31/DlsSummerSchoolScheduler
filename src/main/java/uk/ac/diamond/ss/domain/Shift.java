@@ -15,10 +15,11 @@ public class Shift {
     private List<Shift> similarShifts = new ArrayList<Shift>();
     private List<Shift> longExperiment = new ArrayList<Shift>();
     private int eTime;
-    private Facility facility ;
+    private final Facility facility ;
     private boolean isLong = false;
 
-    public Shift(){
+    public Shift(Facility fa){
+        this.facility = fa;
     }
 
     public int getID() {
@@ -92,8 +93,5 @@ public class Shift {
         return facility;
     }
 
-    public void setFacility(Facility machine) {
-        facility  = machine;
-    }
 
 }

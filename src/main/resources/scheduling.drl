@@ -7,15 +7,26 @@ import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;
 
-rule "groupSize"
+rule "groupSizeSoft"
     when
     	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
     	$total : Number() from accumulate(
+    		$a : Allocation(ID> $aid, getShift().getID() == $ashiftID), 
+    		count($a)
+    	)
+    then
+    scoreHolder.addSoftConstraintMatch(kcontext,-($total.intValue()*$total.intValue()));
+end
+
+rule "groupSizeHard"
+    when
+    	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
+    	$total : Number(intValue>5) from accumulate(
     		$a : Allocation(ID>= $aid, getShift().getID() == $ashiftID), 
     		count($a)
     	)
     then
-    scoreHolder.addHardConstraintMatch(kcontext,2-$total.intValue());//should be 5 if 5 per group is max preferred
+    scoreHolder.addHardConstraintMatch(kcontext,-$total.intValue());//should be 5 if 5 per group is max preferred
 end
 
 rule "noOverlappingAllocations"
@@ -26,7 +37,8 @@ rule "noOverlappingAllocations"
     scoreHolder.addHardConstraintMatch(kcontext, -5);
 end
 	
-	rule "noSimilarSesssions"
+
+rule "noSimilarSesssions"
     when
     	Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
     	Allocation(ID> $aid, getShift().checkIfSimilar($ashift), getPerson().getID() == $aPersonID )
@@ -36,10 +48,10 @@ end
 
 rule "longExperimentsSingle"
     when
-    	Allocation(getShift() != null, $ashift : getShift(), getShift().isLong(), getPerson() != null, $aPersonID : getPerson().getID())
-   		not Allocation(getShift() != null, getPerson() != null, getShift().checkIfLong($ashift), getPerson().getID() == $aPersonID)
+    	Allocation($aid : ID,getShift() != null, $ashift : getShift(), getShift().isLong(), getPerson() != null, $aPersonID : getPerson().getID())
+   		not Allocation(ID> $aid,getShift() != null, getPerson() != null, getShift().checkIfLong($ashift), getPerson().getID() == $aPersonID)
  then
-    scoreHolder.addHardConstraintMatch(kcontext, -5);
+    scoreHolder.addHardConstraintMatch(kcontext, -1);//-1
 end
 
 rule "preferencesSoft"
@@ -49,7 +61,7 @@ rule "preferencesSoft"
     		sum($preference)
     	)
     then
-    scoreHolder.addSoftConstraintMatch(kcontext, $totalPreferences.intValue()-9);//maximal sum of preferences given
+    scoreHolder.addSoftConstraintMatch(kcontext, $totalPreferences.intValue()-15);//maximal sum of preferences given
 end
 
 rule "preferencesHard"
@@ -59,5 +71,3 @@ rule "preferencesHard"
    then
    scoreHolder.addHardConstraintMatch(kcontext, -1);//at least one preference
 end
-
-	

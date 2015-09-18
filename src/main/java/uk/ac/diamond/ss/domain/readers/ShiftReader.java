@@ -33,7 +33,7 @@ public class ShiftReader{
         for (short c = 1; c < firstRow.getLastCellNum(); c++) {
             //facility name
             Cell cellFirst = firstRow.getCell(c);
-            Facility faclitity = Facility.getOrCreate(cellFirst.getStringCellValue());
+            Facility faclitity = Facility.getOrCreate(cellFirst.getStringCellValue(),c-1);
             //Period length
             Cell cellSecond = secondRow.getCell(c);
             int type = (int) cellSecond.getNumericCellValue();
@@ -42,17 +42,16 @@ public class ShiftReader{
             String s = cellThird.getStringCellValue();
             //Create shifts accordingly
             for (String retval: s.split(",")){
-                Shift sf = new Shift();
+                Shift sf = new Shift(faclitity);
                 sf.setID(count);
-                sf.setFacility(faclitity);
+
                 sf.setStartTime((Integer.parseInt(retval)-1)*Parameters.SHIFTS_LENGHT);
                 sf.setEndTime((Integer.parseInt(retval))*Parameters.SHIFTS_LENGHT);
                 result.add(sf);
                 count++;
                 if(type==2){
-                    Shift sf1 = new Shift();
+                    Shift sf1 = new Shift(faclitity);
                     sf1.setID(count);
-                    sf1.setFacility(faclitity);
                     sf.addLongExperiment(sf1);
                     sf1.addLongExperiment(sf);
                     sf1.setStartTime((Integer.parseInt(retval))*Parameters.SHIFTS_LENGHT);
@@ -65,7 +64,7 @@ public class ShiftReader{
         return result;
     }
 
-    public List<Shift> load() {
+   /* public List<Shift> load() {
         List<Shift> result = new ArrayList<Shift>();
         List<Shift> similar = new ArrayList<Shift>();
         List<Shift> longEx = new ArrayList<Shift>();
@@ -78,8 +77,8 @@ public class ShiftReader{
         two.setID(20);
         two.setStartTime(6);
         two.setEndTime(10);
-        /*one.addSimilar(two);
-        two.addSimilar(one);*/
+        one.addSimilar(two);
+        two.addSimilar(one);
 
         Shift three = new Shift();
         three.setID(3);
@@ -99,7 +98,7 @@ public class ShiftReader{
         result.add(three);
         result.add(four);
         return result;
-    }
+    }*/
 
 
 
