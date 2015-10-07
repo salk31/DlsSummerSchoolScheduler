@@ -4,20 +4,12 @@
  */
 package uk.ac.diamond.ss;
 
-
-
-
-
 import org.junit.Test;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 
 import uk.ac.diamond.ss.domain.Person;
 
-
-/**
- *
- */
 public class PlannerTest  {
 
     @Test

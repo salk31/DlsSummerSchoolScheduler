@@ -42,18 +42,15 @@ public class ShiftReader{
             String s = cellThird.getStringCellValue();
             //Create shifts accordingly
             for (String retval: s.split(",")){
-                Shift sf = new Shift(faclitity);
-                sf.setID(count);
-
+                Shift sf = new Shift(faclitity,count);
                 sf.setStartTime((Integer.parseInt(retval)-1)*Parameters.SHIFTS_LENGHT);
                 sf.setEndTime((Integer.parseInt(retval))*Parameters.SHIFTS_LENGHT);
                 result.add(sf);
                 count++;
                 if(type==2){
-                    Shift sf1 = new Shift(faclitity);
-                    sf1.setID(count);
-                    sf.addLongExperiment(sf1);
-                    sf1.addLongExperiment(sf);
+                    Shift sf1 = new Shift(faclitity,count);
+                   sf.setPair(sf1);
+                    sf1.setPair(sf);
                     sf1.setStartTime((Integer.parseInt(retval))*Parameters.SHIFTS_LENGHT);
                     sf1.setEndTime((Integer.parseInt(retval)+1)*Parameters.SHIFTS_LENGHT);
                     result.add(sf1);

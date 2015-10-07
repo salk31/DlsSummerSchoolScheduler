@@ -10,10 +10,6 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
 import uk.ac.diamond.ss.DodgyDifficultyWeightFactory;
 
-/**
- *
- *
- */
 @PlanningEntity(difficultyWeightFactoryClass = DodgyDifficultyWeightFactory.class)
 public class Allocation {
 
@@ -26,7 +22,7 @@ public class Allocation {
     }
 
     public void setID(int i){
-           ID = i;
+        ID = i;
     }
 
     //@PlanningVariable(valueRangeProviderRefs = {"people"})

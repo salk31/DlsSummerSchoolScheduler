@@ -5,29 +5,37 @@
 
 package uk.ac.diamond.ss.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import uk.ac.diamond.ss.Parameters;
 
 public class Shift {
 
-    private int ID  = 0;
+    private final int ID;
     private int sTime;
-    private List<Shift> similarShifts = new ArrayList<Shift>();
-    private List<Shift> longExperiment = new ArrayList<Shift>();
     private int eTime;
     private final Facility facility ;
-    private boolean isLong = false;
+    private Shift pair;
 
-    public Shift(Facility fa){
+    public Shift(Facility fa, int count){
         this.facility = fa;
+        this.ID = count;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Shift) {
+            Shift that = (Shift) other;
+            result = (this.getID() == that.getID());
+        }
+        return result;
+    }
+
+    public int getStudentsPerShift() {
+        return Parameters.STUDENTS_PER_SHIFT;
     }
 
     public int getID() {
         return ID;
-    }
-
-    public void setID (int anID) {
-        ID = anID;
     }
 
     public int getStartTime() {
@@ -38,47 +46,30 @@ public class Shift {
         sTime = startTime;
     }
 
-    public void addSimilar(Shift s){
-        if(!similarShifts.contains(s)){
-            similarShifts.add(s);
-        }
-    }
-
     public boolean checkIfSimilar(Shift s){
-        if(similarShifts.contains(s)){
+        if(s.getFacility().getName() == facility.getName()){
+            if(pair!=null && s.getPair().equals(pair)){
+                return false;
+            }
             return true;
         }
         return false;
     }
 
-    public void addLongExperiment(Shift s){
-        setLong();
-        //s.setLong();
-        if(!longExperiment.contains(s)){
-            longExperiment.add(s);
-        }
+    public Shift getPair(){
+        return pair;
     }
 
-    public boolean checkIfLong(Shift s){
-        if(longExperiment.contains(s)){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isLong(){
-        return isLong;
-    }
-
-    public void setLong(){
-        isLong=true;
+    public void setPair(Shift sh) {
+        pair = sh;
     }
 
     public boolean checkOverlap(Shift s){
-        if((s.getStartTime() <= eTime && s.getStartTime() >= sTime ) || (s.getEndTime() >= sTime && s.getEndTime() <= eTime)){
-            return true;
+        if ((s.getEndTime() <= sTime && s.getEndTime() < eTime && s.getStartTime() < sTime && s.getStartTime() < eTime)
+                || (s.getStartTime() >= eTime && s.getStartTime() > sTime && s.getEndTime() > eTime && s.getEndTime() > sTime)){
+            return false;//true
         }
-        return false;
+        return true;//False
     }
 
     public int getEndTime() {
@@ -92,6 +83,5 @@ public class Shift {
     public Facility getFacility() {
         return facility;
     }
-
 
 }

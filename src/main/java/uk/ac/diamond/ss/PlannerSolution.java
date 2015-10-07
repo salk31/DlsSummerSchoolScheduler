@@ -57,7 +57,6 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
         this.score = p;
     }
 
-    // @ValueRangeProvider(id = "people")
     public List<Person> getPeople() {
         return people;
     }

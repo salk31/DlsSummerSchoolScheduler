@@ -40,14 +40,14 @@ public class Facility {
 
     @Override
     public boolean equals(Object o){
-       Facility f = (Facility) o;
-       return f.getName().equals(name);
+        Facility f = (Facility) o;
+        return f.getName().equals(name);
     }
 
     @Override
     public int hashCode() {
         return id;
-        }
+    }
 
     private void setID(int aID) {
         id = aID;

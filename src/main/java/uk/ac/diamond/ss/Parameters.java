@@ -11,8 +11,9 @@ package uk.ac.diamond.ss;
  */
 public class Parameters {
 
-    public static  int SHIFTS_PER_STUDENT = 2;//move to project variables
+    public static  int SHIFTS_PER_STUDENT = 4;//number of students per shift
+    public static  int STUDENTS_PER_SHIFT = 5;
     public static  int SHIFTS_LENGHT = 6;//Length of a shift in hours
-    public static  int SHIFTS_OFFSET = 12;//no experiments at night???
+    public static  int SHIFTS_OFFSET = 12;//no experiments at night
 
 }
