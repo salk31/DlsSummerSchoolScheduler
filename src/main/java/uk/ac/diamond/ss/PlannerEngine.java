@@ -21,7 +21,6 @@ public class PlannerEngine {
 
         SolverFactory solverFactory = SolverFactory.createFromXmlResource("solverConfig.xml");
 
-
         solver = solverFactory.buildSolver();
     }
 
