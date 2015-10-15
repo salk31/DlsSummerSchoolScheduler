@@ -84,4 +84,8 @@ public class Shift {
         return facility;
     }
 
+    @Override
+    public String toString() {
+        return facility.getName() + " " + sTime;
+    }
 }
