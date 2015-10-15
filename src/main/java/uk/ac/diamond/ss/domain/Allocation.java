@@ -43,4 +43,9 @@ public class Allocation {
         return sh;
     }
 
+    @Override
+    public String toString() {
+        return p + " " + sh;
+    }
+
 }

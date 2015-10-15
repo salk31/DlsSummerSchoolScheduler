@@ -79,6 +79,7 @@ public class Main {
         for (Allocation p : ps.getAllocations()) {
             System.out.println("Person: " + p.getPerson() + ", shift: " + p.getShift().getID());
         }
-    }
 
+        new ScorePrinter(solver).print(ps);
+    }
 }
