@@ -22,6 +22,7 @@ import uk.ac.diamond.ss.domain.Person;
  * Read in people and
  */
 public class PersonReader {
+
     private Sheet sheet;
 
     public PersonReader(Sheet sheet) {

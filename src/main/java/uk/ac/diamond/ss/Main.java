@@ -4,6 +4,7 @@ package uk.ac.diamond.ss;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -16,6 +17,7 @@ import org.optaplanner.core.api.solver.Solver;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
+import uk.ac.diamond.ss.domain.readers.CorrelationReader;
 import uk.ac.diamond.ss.domain.readers.PersonReader;
 import uk.ac.diamond.ss.domain.readers.ShiftReader;
 
@@ -34,14 +36,16 @@ public class Main {
 
         ShiftReader sr = new ShiftReader(wb.getSheet("periods"));
 
+        CorrelationReader cr = new CorrelationReader(wb.getSheet("correlation"));
+
         PlannerEngine pe = new PlannerEngine();
         Solver solver = pe.getSolver();
-
 
         PlannerSolution prob = new PlannerSolution();
         java.util.List<Person> people = pr.read();
         prob.setPeople(people);
-        java.util.List<Shift> shifts = sr.read();
+        List<Shift> shifts = sr.read();
+        new CorrelationManager().assign(cr.read());
         prob.setShifts(shifts);
         prob.setAllocations();
 

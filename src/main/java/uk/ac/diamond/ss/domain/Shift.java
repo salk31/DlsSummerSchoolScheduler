@@ -46,8 +46,8 @@ public class Shift {
         sTime = startTime;
     }
 
-    public boolean checkIfSimilar(Shift s){
-        if(s.getFacility().getName() == facility.getName()){
+    public boolean getSimilar(Shift s){
+        if (s.getFacility().getName() == facility.getName()) {
             if(pair!=null && s.getPair().equals(pair)){
                 return false;
             }
@@ -56,6 +56,13 @@ public class Shift {
         return false;
     }
 
+    public int getCorrelated(Shift s){
+    int corrCheck = facility.checkCorrelations(s.getFacility());
+        if (corrCheck != 0) {
+            return corrCheck;
+        }
+        return 0;
+    }
     public Shift getPair(){
         return pair;
     }

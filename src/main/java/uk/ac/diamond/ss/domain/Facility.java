@@ -5,7 +5,9 @@
 
 package uk.ac.diamond.ss.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,8 +29,13 @@ public class Facility {
         return fac;
     }
 
+    public static Map<String, Facility> returnAll(){
+       return facilityByName;
+    }
+
     private final String name;
     private int id;
+    private  List<Correlation> correlations = new ArrayList<Correlation>();
 
     public Facility(String name) {
         this.name = name;
@@ -53,4 +60,21 @@ public class Facility {
         id = aID;
     }
 
+    public void addCorrelation(Correlation c){
+        if(!correlations.contains(c)){
+            correlations.add(c);
+        }
+    }
+
+    public List<Correlation> getCorrelations(){
+        return correlations;
+    }
+
+    public int checkCorrelations(Facility facility) {
+        for(Correlation c : correlations){
+            c.getSetFacility().contains(facility);
+            return c.getRate();
+        }
+        return 0;
+    }
 }
