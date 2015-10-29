@@ -19,6 +19,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import uk.ac.diamond.ss.domain.Correlation;
+import uk.ac.diamond.ss.domain.CorrelationManager;
 import uk.ac.diamond.ss.domain.Facility;
 
 /**

@@ -3,11 +3,12 @@ dialect "java"
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
+import uk.ac.diamond.ss.domain.readers.WeightsReader;
 import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;
 
-//comment about the variables
+//comment on the variables
 
 rule "groupSizeSoft"
     when
@@ -17,7 +18,8 @@ rule "groupSizeSoft"
     		count($a)
     	)
     then
-    scoreHolder.addSoftConstraintMatch(kcontext,-($total.intValue()*$total.intValue()));
+     int groupSoft = WeightsReader.GROUP_SIZE_SOFT;
+    scoreHolder.addSoftConstraintMatch(kcontext,-groupSoft*($total.intValue()*$total.intValue()));
 end
 
 rule "groupSizeHard"
@@ -28,50 +30,44 @@ rule "groupSizeHard"
     		count($a)
     	)
     then
-    scoreHolder.addHardConstraintMatch(kcontext,-$total.intValue());
+    int groupHard = WeightsReader.GROUP_SIZE_HARD;
+    scoreHolder.addHardConstraintMatch(kcontext,-groupHard*$total.intValue());
 end
 
-rule "noOverlappingAllocations"
+rule "noOverlappingAllocationsHard"
    when
   	 Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
      Allocation(ID> $aid, getShift().checkOverlap($ashift), getPerson().getID() == $aPersonID )
     then
-    scoreHolder.addHardConstraintMatch(kcontext, -1);
+    int noOverlapping = WeightsReader.NO_OVERLAPPING;
+    scoreHolder.addHardConstraintMatch(kcontext, - noOverlapping);
 end
 
-rule "noSimilarSesssions"
+rule "noSimilarSesssionsHard"
     when
     	Allocation($aid : ID, getShift() != null,  $ashift : getShift(),getPerson() != null, $aPersonID : getPerson().getID())
     	Allocation( ID> $aid,getShift().getSimilar($ashift), getPerson().getID() == $aPersonID )
     then
-    scoreHolder.addHardConstraintMatch(kcontext, -1);//use correlation degree instead of -1
+    int noSimilar = WeightsReader.NO_SIMILOAR;
+    scoreHolder.addHardConstraintMatch(kcontext, -noSimilar);
 end
 
-rule "correlationConstraint"
+rule "correlationSoft"
     when
     	$a1:Allocation($aid : ID, getShift() != null,  $ashift : getShift(),getPerson() != null, $aPersonID : getPerson().getID())
     	$a2:Allocation(ID> $aid, getShift().getCorrelated($ashift)!=0, getPerson().getID() == $aPersonID )
     then
-    scoreHolder.addSoftConstraintMatch(kcontext,-$a2.getShift().getCorrelated($a1.getShift()));
+    int correlation = WeightsReader.CORRELATION;
+    scoreHolder.addSoftConstraintMatch(kcontext,-correlation*$a2.getShift().getCorrelated($a1.getShift()));
 end
 
-rule "longExperimentsSingle"
-   when
+rule "longExperimentsPairsHard"
+ when
  	Allocation($aid : ID,getShift() != null, $apair: getShift().getPair(), getPerson() != null, $aPersonID : getPerson().getID())
- 	Allocation(getShift() != null, getPerson() != null, getShift().equals($apair), getPerson().getID() == $aPersonID)
+ 	Allocation(getShift() != null, getPerson() != null, getShift()==$apair, getPerson().getID() == $aPersonID)
  then
-   scoreHolder.addHardConstraintMatch(kcontext,1);
-end
-
-rule "longExperimentsSingle1"
-    when
-  	Allocation($aid : ID,getShift() != null, $apair: getShift().getPair(), getPerson() != null, $aPersonID : getPerson().getID())
-  	$total : Number() from accumulate(
-    		$a : Allocation(ID>$aid,getShift() != null, getShift().equals($apair),getPerson().getID() == $aPersonID), 
-    		count($a)
-    	)
-    then
-   scoreHolder.addSoftConstraintMatch(kcontext,$total.intValue()-1);//$total.intValue()
+ 	 int longExperimants = WeightsReader.LONG_EXPERIMANTS;
+   scoreHolder.addHardConstraintMatch(kcontext,longExperimants);
 end
 
 rule "preferencesSoft"
@@ -82,6 +78,7 @@ when
     		sum($preference)
     	)
 then
- scoreHolder.addSoftConstraintMatch(kcontext, (-$totalPreference  + $totalPreferences.intValue()));//maximal sum of preferences given
+ int pref = WeightsReader.PREFERENCES;
+ scoreHolder.addSoftConstraintMatch(kcontext, pref*(-$totalPreference  + $totalPreferences.intValue()));
 end
 

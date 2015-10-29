@@ -15,11 +15,14 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.optaplanner.core.api.solver.Solver;
 
 import uk.ac.diamond.ss.domain.Allocation;
+import uk.ac.diamond.ss.domain.CorrelationManager;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
 import uk.ac.diamond.ss.domain.readers.CorrelationReader;
+import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
 import uk.ac.diamond.ss.domain.readers.PersonReader;
 import uk.ac.diamond.ss.domain.readers.ShiftReader;
+import uk.ac.diamond.ss.domain.readers.WeightsReader;
 
 public class Main {
 
@@ -37,6 +40,9 @@ public class Main {
         ShiftReader sr = new ShiftReader(wb.getSheet("periods"));
 
         CorrelationReader cr = new CorrelationReader(wb.getSheet("correlation"));
+
+        (new KeyValuesReader(wb.getSheet("key_values"))).read();
+        (new WeightsReader(wb.getSheet("weights"))).read();
 
         PlannerEngine pe = new PlannerEngine();
         Solver solver = pe.getSolver();
@@ -78,10 +84,14 @@ public class Main {
         new SummaryWriter(summarySheet, people).writeAvg(ps);
         wb.write(new FileOutputStream(filename));
 
-
-
         for (Allocation p : ps.getAllocations()) {
             System.out.println("Person: " + p.getPerson() + ", shift: " + p.getShift().getID());
+        }
+
+        for (Shift p : shifts) {
+            if(p.getPair()!=null){
+                System.out.println("Shift: " + p.getID() + " pair "  + p.getPair().getID()+ " similar "+p.getSimilar(p.getPair()));
+            }
         }
 
         new ScorePrinter(solver).print(ps);

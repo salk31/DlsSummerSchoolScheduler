@@ -38,21 +38,4 @@ public class Correlation {
         return (f1.getRate() == rate && f1.getSetFacility().containsAll(f));
     }
 
-/*    public Facility getFirstFacility(){
-    return f1;
-}
-*/
-/*    public Facility getSecondFacility(){
-    return f2;
-}
-*/
-
-/*    public void setFirstFacility(Facility af1){
-        f1 = af1;
-    }*/
-
-  /*  public void setSecondFacility(Facility af2){
-        f2 = af2;
-    }*/
-
 }

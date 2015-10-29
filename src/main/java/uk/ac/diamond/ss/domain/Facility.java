@@ -72,8 +72,10 @@ public class Facility {
 
     public int checkCorrelations(Facility facility) {
         for(Correlation c : correlations){
-            c.getSetFacility().contains(facility);
+            if(!facility.getName().equals(this.name)){
+                c.getSetFacility().contains(facility);
             return c.getRate();
+            }
         }
         return 0;
     }

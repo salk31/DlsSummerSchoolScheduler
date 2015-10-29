@@ -8,6 +8,9 @@ package uk.ac.diamond.ss.domain;
 import java.util.HashMap;
 import java.util.Map;
 
+import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
+import uk.ac.diamond.ss.domain.readers.WeightsReader;
+
 /**
  *
  *
@@ -70,9 +73,7 @@ public class Person {
         Facility k = s.getFacility();
         if (preferences.containsKey(k)){
             int pref = preferences.get(k);
-            if (pref != 0){
-                return 6 - pref;//numbers should be reverted!!
-            }
+            return pref;
         }
         return 0;
     }
@@ -91,19 +92,44 @@ public class Person {
     public int getSumPreference(){
         int sum = 0;
         for(int i : preferences.values()){
+
             sum = sum+i;
         }
         return sum;
-
     }
 
     public boolean preferencesInclude(int num) {
         for (int i : preferences.values()){
-            if (i == 6-num){
+            if (i == num){
                 return true;
             }
         }
         return false;
+    }
+
+    public static int mapPreference( int pref){
+        //invert
+        int mappedPreference = 0;
+        if (pref != 0){
+            mappedPreference = 1+ KeyValuesReader.MAX_PREFERENCES - pref;
+        }
+        //scale
+       if( mappedPreference == 5){
+           mappedPreference = WeightsReader.PREFERENCE1 * mappedPreference;
+       }
+       if( mappedPreference == 4){
+           mappedPreference = WeightsReader.PREFERENCE2 * mappedPreference;
+       }
+       if( mappedPreference == 3){
+           mappedPreference = WeightsReader.PREFERENCE3 * mappedPreference;
+       }
+       if( mappedPreference == 2){
+           mappedPreference = WeightsReader.PREFERENCE4 * mappedPreference;
+       }
+       if( mappedPreference == 1){
+           mappedPreference = WeightsReader.PREFERENCE5 * mappedPreference;
+       }
+       return mappedPreference;
     }
 
 }

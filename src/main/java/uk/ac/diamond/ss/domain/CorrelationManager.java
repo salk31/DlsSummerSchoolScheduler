@@ -3,12 +3,9 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss;
+package uk.ac.diamond.ss.domain;
 
 import java.util.List;
-
-import uk.ac.diamond.ss.domain.Correlation;
-import uk.ac.diamond.ss.domain.Facility;
 
 /**
  *

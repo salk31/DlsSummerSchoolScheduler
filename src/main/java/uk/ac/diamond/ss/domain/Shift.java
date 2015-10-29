@@ -5,7 +5,7 @@
 
 package uk.ac.diamond.ss.domain;
 
-import uk.ac.diamond.ss.Parameters;
+import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
 
 public class Shift {
 
@@ -31,7 +31,7 @@ public class Shift {
     }
 
     public int getStudentsPerShift() {
-        return Parameters.STUDENTS_PER_SHIFT;
+        return KeyValuesReader.STUDENTS_PER_SHIFT;
     }
 
     public int getID() {
@@ -47,10 +47,10 @@ public class Shift {
     }
 
     public boolean getSimilar(Shift s){
-        if (s.getFacility().getName() == facility.getName()) {
-            if(pair!=null && s.getPair().equals(pair)){
-                return false;
-            }
+        if (s.getFacility().getName().equals(facility.getName())) {
+            if(pair != null && s == pair){
+              return false;
+          }
             return true;
         }
         return false;

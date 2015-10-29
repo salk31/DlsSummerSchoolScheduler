@@ -5,10 +5,7 @@
 
 package uk.ac.diamond.ss.readers;
 
-/**
- * 
- * 
- */
+
 public class ShiftReaderTest {
 
 }

@@ -17,6 +17,7 @@ import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
+import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
 
 /**
  * A candidate solution to the scheduling problem.
@@ -90,7 +91,7 @@ public class PlannerSolution implements org.optaplanner.core.api.domain.solution
     private List<Allocation> createAllocationList() {
         int id = 0;
         List<Allocation> alloList = new ArrayList<Allocation>();
-        for (int i = 0; i < Parameters.SHIFTS_PER_STUDENT; i++) {
+        for (int i = 0; i < KeyValuesReader.SHIFTS_PER_STUDENT; i++) {
             for (Person p : getPeople()) {
                 Allocation allocation = new Allocation();
                 allocation.setPerson(p);
