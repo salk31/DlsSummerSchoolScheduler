@@ -63,17 +63,24 @@ public class SummaryWriter {
     private double percentage(PlannerSolution ps, int num) {
         int calc = 0;
         int used_num =0;
+        int long_flag = 0;
         num = Person.mapPreference(num);
         for (Person pl: people){
             for (Allocation p : ps.getAllocations()) {
                 if (p.getPerson().getName().equals(pl.getName()) && pl.checkPreference(p.getShift()) == num){
                     calc++;
+                    if(p.getShift().getPair()!=null){
+                        long_flag = 1;//long experiments counted once
+                    }
                 }
             }
+
             if (pl.preferencesInclude(num)){//how many people actually included this preference
                 used_num++;
+
             }
         }
+        calc = calc-long_flag;//long experiments counted once
         return 100*((double)calc/used_num);
     }
 

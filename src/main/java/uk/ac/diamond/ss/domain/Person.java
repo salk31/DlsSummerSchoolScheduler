@@ -92,7 +92,6 @@ public class Person {
     public int getSumPreference(){
         int sum = 0;
         for(int i : preferences.values()){
-
             sum = sum+i;
         }
         return sum;

@@ -13,7 +13,7 @@ public class Shift {
     private int sTime;
     private int eTime;
     private final Facility facility ;
-    private Shift pair;
+    private Shift pair;//long experiments
 
     public Shift(Facility fa, int count){
         this.facility = fa;

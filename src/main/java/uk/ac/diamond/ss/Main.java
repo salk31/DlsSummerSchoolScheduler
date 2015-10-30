@@ -14,7 +14,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.optaplanner.core.api.solver.Solver;
 
-import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.CorrelationManager;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
@@ -83,16 +82,6 @@ public class Main {
 
         new SummaryWriter(summarySheet, people).writeAvg(ps);
         wb.write(new FileOutputStream(filename));
-
-        for (Allocation p : ps.getAllocations()) {
-            System.out.println("Person: " + p.getPerson() + ", shift: " + p.getShift().getID());
-        }
-
-        for (Shift p : shifts) {
-            if(p.getPair()!=null){
-                System.out.println("Shift: " + p.getID() + " pair "  + p.getPair().getID()+ " similar "+p.getSimilar(p.getPair()));
-            }
-        }
 
         new ScorePrinter(solver).print(ps);
     }
