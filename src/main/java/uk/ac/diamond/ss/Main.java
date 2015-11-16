@@ -80,7 +80,7 @@ public class Main {
 
         new SolutionWriter(solutionSheet,people).write(ps,style);
 
-        new SummaryWriter(summarySheet, people).writeAvg(ps);
+        new SummaryWriter(summarySheet, people,shifts).writeAvg(ps);
         wb.write(new FileOutputStream(filename));
 
         new ScorePrinter(solver).print(ps);

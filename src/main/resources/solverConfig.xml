@@ -20,8 +20,8 @@
  
   <termination>
   <terminationCompositionStyle>OR</terminationCompositionStyle>
-   <minutesSpentLimit>10</minutesSpentLimit> 
-   <unimprovedMinutesSpentLimit>5</unimprovedMinutesSpentLimit>
+   <hoursSpentLimit>3</hoursSpentLimit> 
+   <unimprovedMinutesSpentLimit>30</unimprovedMinutesSpentLimit>
   </termination>
   <constructionHeuristic>
     <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>

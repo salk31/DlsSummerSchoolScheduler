@@ -23,6 +23,7 @@ rule "groupSizeSoft"
     scoreHolder.addSoftConstraintMatch(kcontext,-groupSoft*($total.intValue()*$total.intValue()));
 end
 
+
 rule "groupSizeHard1"
  when
     	$total : Number(intValue < 1) from accumulate(
@@ -137,6 +138,19 @@ rule "groupSizeHard"
    int groupHard = WeightsReader.GROUP_SIZE_HARD;
     scoreHolder.addHardConstraintMatch(kcontext,-groupHard*$total.intValue());
 end
+
+rule "groupSizeHard11"
+    when
+    	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID(), getPerson() != null, $aPersonID : getPerson().getID())
+    	$total : Number(intValue < 1) from accumulate(
+    		$a : Allocation(ID!=$aid, getShift() != null, getShift().getID() == $ashiftID, getPerson().getID() != $aPersonID), 
+    		count($a)
+    	)
+    then
+  
+    scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
 
 rule "noOverlappingAllocationsHard"
    when
