@@ -21,7 +21,7 @@ public class Person {
 
     private String name;
     private int ID;
-    private Map<Facility,Integer> preferences = new HashMap<Facility,Integer>();
+    private Map<Facility,Integer> preferences = new HashMap<Facility,Integer>();//mapped preferences are kept in the map
 
     public Person() {
     }
@@ -82,6 +82,10 @@ public class Person {
         return preferences.get(s.getFacility()) > 0;
     }
 
+    public boolean isFirstPreference(Shift s){
+        return preferences.get(s.getFacility()) == KeyValuesReader.MAX_PREFERENCES;
+    }
+
     private boolean shifFacility(Facility f, Shift s){
         if (s.getFacility().getName().equals(f)){
             return true;
@@ -94,7 +98,7 @@ public class Person {
         for(int i : preferences.values()){
             sum = sum+i;
         }
-        return sum;
+        return 2*sum;//blee needs to be better
     }
 
     public boolean preferencesInclude(int num) {

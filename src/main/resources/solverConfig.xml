@@ -17,11 +17,14 @@
     <!--</assertionScoreDirectorFactory>-->
   </scoreDirectorFactory>
 
+ 
   <termination>
-    <bestScoreLimit >0hard/0soft</bestScoreLimit >
+  <terminationCompositionStyle>OR</terminationCompositionStyle>
+   <minutesSpentLimit>10</minutesSpentLimit> 
+   <unimprovedMinutesSpentLimit>5</unimprovedMinutesSpentLimit>
   </termination>
   <constructionHeuristic>
-    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+    <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
   </constructionHeuristic>
   <localSearch>
     <changeMoveSelector>
@@ -32,7 +35,7 @@
       <!--<moveListFactoryClass>org.optaplanner.examples.nqueens.solver.move.factory.RowChangeMoveFactory</moveListFactoryClass>-->
     <!--</moveListFactory>-->
     <acceptor>
-      <entityTabuSize>5</entityTabuSize>
+      <entityTabuSize>13</entityTabuSize>
     </acceptor>
     <forager>
       <!-- Real world problems require to use of <acceptedCountLimit> -->

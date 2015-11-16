@@ -15,6 +15,7 @@ import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 
 import uk.ac.diamond.ss.domain.Allocation;
+import uk.ac.diamond.ss.domain.Facility;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
 import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
