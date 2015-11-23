@@ -20,21 +20,6 @@ public class Person {
 	public Person() {
 	}
 
-	@Override
-	public boolean equals(Object other) {
-		boolean result = false;
-		if (other instanceof Person) {
-			Person that = (Person) other;
-			result = (this.getID() == that.getID());
-		}
-		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		return ID;
-	}
-
 	public Person(String name) {
 		this.name = name;
 	}

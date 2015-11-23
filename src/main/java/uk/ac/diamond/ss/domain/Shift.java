@@ -27,16 +27,6 @@ public class Shift {
 		this.eTime = end;
 	}
 
-	@Override
-	public boolean equals(Object other) {
-		boolean result = false;
-		if (other instanceof Shift) {
-			Shift that = (Shift) other;
-			result = (this.getID() == that.getID());
-		}
-		return result;
-	}
-
 	public int getStudentsPerShift() {
 		return KeyValuesReader.STUDENTS_PER_SHIFT;
 	}
