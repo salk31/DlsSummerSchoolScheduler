@@ -3,7 +3,7 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss;
+package uk.ac.diamond.ss.domain.out;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import uk.ac.diamond.ss.PlannerSolution;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;

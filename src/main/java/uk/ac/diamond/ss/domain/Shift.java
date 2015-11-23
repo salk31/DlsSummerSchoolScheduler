@@ -5,94 +5,101 @@
 
 package uk.ac.diamond.ss.domain;
 
-import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
+import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 
 public class Shift {
 
-    private final int ID;
-    private int sTime;
-    private int eTime;
-    private final Facility facility ;
-    private Shift pair = null;//long experiments
+	private final int ID;
+	private int sTime;
+	private int eTime;
+	private final Facility facility;
+	private Shift pair = null;// long experiments
 
-    public Shift(Facility fa, int count){
-        this.facility = fa;
-        this.ID = count;
-    }
+	public Shift(Facility fa, int count) {
+		this.facility = fa;
+		this.ID = count;
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        boolean result = false;
-        if (other instanceof Shift) {
-            Shift that = (Shift) other;
-            result = (this.getID() == that.getID());
-        }
-        return result;
-    }
+	public Shift(Facility fa, int count, int st, int end) {// used in tests
+		this.facility = fa;
+		this.ID = count;
+		this.sTime = st;
+		this.eTime = end;
+	}
 
-    public int getStudentsPerShift() {
-        return KeyValuesReader.STUDENTS_PER_SHIFT;
-    }
+	@Override
+	public boolean equals(Object other) {
+		boolean result = false;
+		if (other instanceof Shift) {
+			Shift that = (Shift) other;
+			result = (this.getID() == that.getID());
+		}
+		return result;
+	}
 
-    public int getID() {
-        return ID;
-    }
+	public int getStudentsPerShift() {
+		return KeyValuesReader.STUDENTS_PER_SHIFT;
+	}
 
-    public int getStartTime() {
-        return sTime;
-    }
+	public int getID() {
+		return ID;
+	}
 
-    public void setStartTime (int startTime) {
-        sTime = startTime;
-    }
+	public int getStartTime() {
+		return sTime;
+	}
 
-    public boolean getSimilar(Shift s){
-        if (s.getFacility().getName().equals(facility.getName())) {
-            if(pair != null && s == pair){
-              return false;
-          }
-            return true;
-        }
-        return false;
-    }
+	public void setStartTime(int startTime) {
+		sTime = startTime;
+	}
 
-    public int getCorrelated(Shift s){
-    int corrCheck = facility.checkCorrelations(s.getFacility());
-        if (corrCheck != 0) {
-            return corrCheck;
-        }
-        return 0;
-    }
-    public Shift getPair(){
-        return pair;
-    }
+	public boolean getSimilar(Shift s) {
+		if (s.getFacility().getName().equals(facility.getName())) {
+			if (pair != null && s == pair) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
 
-    public void setPair(Shift sh) {
-        pair = sh;
-    }
+	public int getCorrelated(Shift s) {
+		int corrCheck = facility.checkCorrelations(s.getFacility());
+		if (corrCheck != 0) {
+			return corrCheck;
+		}
+		return 0;
+	}
 
-    public boolean checkOverlap(Shift s){
-        if ((s.getEndTime() <= sTime && s.getEndTime() < eTime && s.getStartTime() < sTime && s.getStartTime() < eTime)
-                || (s.getStartTime() >= eTime && s.getStartTime() > sTime && s.getEndTime() > eTime && s.getEndTime() > sTime)){
-            return false;//true
-        }
-        return true;//False
-    }
+	public Shift getPair() {
+		return pair;
+	}
 
-    public int getEndTime() {
-        return eTime;
-    }
+	public void setPair(Shift sh) {
+		pair = sh;
+	}
 
-    public void setEndTime (int endTime) {
-        eTime = endTime;
-    }
+	public boolean checkOverlap(Shift s) {
+		if ((s.getStartTime() >= eTime || s.getEndTime() <= sTime)) {
+			return false;
+		}
+		return true;
+	}
 
-    public Facility getFacility() {
-        return facility;
-    }
+	public int getEndTime() {
+		return eTime;
+	}
 
-    @Override
-    public String toString() {
-        return facility.getName() + " " + sTime;
-    }
+	public void setEndTime(int endTime) {
+		eTime = endTime;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	@Override
+	public String toString() {
+		return facility.getName() + " " + sTime;
+	}
 }

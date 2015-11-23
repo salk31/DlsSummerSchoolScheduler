@@ -1,9 +1,9 @@
 /*
  * Diamond User Administration System
- * Copyright © 2015 Diamond Light Source Ltd
+ * Copyright ï¿½ 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss;
+package uk.ac.diamond.ss.domain.out;
 
 import org.optaplanner.core.api.domain.solution.Solution;
 import org.optaplanner.core.api.score.constraint.ConstraintMatch;

@@ -8,44 +8,41 @@ package uk.ac.diamond.ss.domain;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
-import uk.ac.diamond.ss.DodgyDifficultyWeightFactory;
-
-@PlanningEntity(difficultyWeightFactoryClass = DodgyDifficultyWeightFactory.class)
+@PlanningEntity()
 public class Allocation {
 
-    private Person p;
-    private Shift sh;
-    private int ID;
+	private Person p;
+	private Shift sh;
+	private int ID;
 
-    public int getID(){
-        return ID;
-    }
+	public int getID() {
+		return ID;
+	}
 
-    public void setID(int i){
-        ID = i;
-    }
+	public void setID(int i) {
+		ID = i;
+	}
 
-    //@PlanningVariable(valueRangeProviderRefs = {"people"})
-    public Person getPerson(){
-        return p;
-    }
+	public Person getPerson() {
+		return p;
+	}
 
-    public void setPerson( Person aP){
-        p = aP;
-    }
+	public void setPerson(Person aP) {
+		p = aP;
+	}
 
-    public void setShift( Shift aSh){
-        sh = aSh;
-    }
+	public void setShift(Shift aSh) {
+		sh = aSh;
+	}
 
-    @PlanningVariable(valueRangeProviderRefs = {"shifts"})
-    public Shift getShift(){
-        return sh;
-    }
+	@PlanningVariable(valueRangeProviderRefs = { "shifts" })
+	public Shift getShift() {
+		return sh;
+	}
 
-    @Override
-    public String toString() {
-        return p + " " + sh;
-    }
+	@Override
+	public String toString() {
+		return p + " " + sh;
+	}
 
 }

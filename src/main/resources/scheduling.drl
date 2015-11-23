@@ -4,7 +4,7 @@ import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHold
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Facility;
-import uk.ac.diamond.ss.domain.readers.WeightsReader;
+import uk.ac.diamond.ss.domain.in.WeightsReader;
 import org.optaplanner.core.api.score.constraint.primint.IntConstraintMatch;
 
 global HardSoftLongScoreHolder scoreHolder;

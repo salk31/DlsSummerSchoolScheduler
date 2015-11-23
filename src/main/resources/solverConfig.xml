@@ -20,7 +20,7 @@
  
   <termination>
   <terminationCompositionStyle>OR</terminationCompositionStyle>
-   <minutesSpentLimit>3</minutesSpentLimit> 
+   <secondsSpentLimit>10</secondsSpentLimit> 
    <unimprovedMinutesSpentLimit>1</unimprovedMinutesSpentLimit>
   </termination>
   <constructionHeuristic>

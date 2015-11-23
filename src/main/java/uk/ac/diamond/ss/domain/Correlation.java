@@ -7,35 +7,32 @@ package uk.ac.diamond.ss.domain;
 
 import java.util.Set;
 
-/**
- *
- *
- */
 public class Correlation {
 
-    private Set<Facility> f;
-    private int rate;
+	private Set<Facility> f;
+	private int rate;
 
-    public Correlation(Set<Facility> a, int cor){
-        f = a;
-        rate = cor;
-    }
+	public Correlation(Set<Facility> a, int cor) {
+		f = a;
+		rate = cor;
+	}
 
-    public Set<Facility> getSetFacility(){
-        return f;
-    }
-    public int getRate(){
-        return rate;
-    }
+	public Set<Facility> getSetFacility() {
+		return f;
+	}
 
-    public void setSetFacility(Set<Facility> af){
-        f = af;
-    }
+	public int getRate() {
+		return rate;
+	}
 
-    @Override
-    public boolean equals(Object o){
-        Correlation f1 = (Correlation) o;
-        return (f1.getRate() == rate && f1.getSetFacility().containsAll(f));
-    }
+	public void setSetFacility(Set<Facility> af) {
+		f = af;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		Correlation f1 = (Correlation) o;
+		return (f1.getRate() == rate && f1.getSetFacility().containsAll(f));
+	}
 
 }

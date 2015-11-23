@@ -1,4 +1,4 @@
-package uk.ac.diamond.ss;
+package uk.ac.diamond.ss.domain.out;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,10 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import uk.ac.diamond.ss.PlannerSolution;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
+import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 
 
 
@@ -23,12 +25,18 @@ public class SolutionWriter {
         this.sheet = sheet;
     }
 
+    public SolutionWriter(){//tests only
+    }
+    public void setAllocations(List<Allocation> alo){
+    	allocations = alo; 
+    }
+    
     public void write(PlannerSolution solution,CellStyle style) {
 
         allocations = solution.getAllocations();
         Row headerRow = sheet.createRow(0);
 
-        headerRow.createCell(1).setCellValue("Person");
+        headerRow.createCell(0).setCellValue("Person");
         headerRow.createCell(1).setCellValue("Period1");
         headerRow.createCell(2).setCellValue("Period2");
         headerRow.createCell(3).setCellValue("Period3");
@@ -63,17 +71,18 @@ public class SolutionWriter {
         }
     }
 
-    private String findPeriod(Person p, int num) {
+    public String findPeriod(Person p, int num) {
         for (Allocation a : allocations){
-            if (a.getPerson().getName().equals(p.getName()) && a.getShift().getStartTime() == num*6){//dziwne daty - uproscic!!!
+            if (a.getPerson().getName().equals(p.getName()) && a.getShift().getStartTime() == num*KeyValuesReader.SHIFTS_LENGHT){
                 return a.getShift().getFacility().getName();
             }
         }
         return null;
     }
-    private boolean checkPreference(Person p,int num) {
+    
+    public boolean checkPreference(Person p,int num) {
         for(Allocation a : allocations){
-            if (a.getPerson().getName().equals(p.getName()) && a.getShift().getStartTime() == num*6 && p.isPreference(a.getShift())){
+            if (a.getPerson().getName().equals(p.getName()) && a.getShift().getStartTime() == num*KeyValuesReader.SHIFTS_LENGHT && p.isPreference(a.getShift())){
                 return true ;
             }
         }

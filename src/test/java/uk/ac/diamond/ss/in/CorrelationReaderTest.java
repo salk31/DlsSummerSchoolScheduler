@@ -3,7 +3,7 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss.readers;
+package uk.ac.diamond.ss.in;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import uk.ac.diamond.ss.domain.Correlation;
 import uk.ac.diamond.ss.domain.Facility;
-import uk.ac.diamond.ss.domain.readers.CorrelationReader;
+import uk.ac.diamond.ss.domain.in.CorrelationReader;
 
 
 

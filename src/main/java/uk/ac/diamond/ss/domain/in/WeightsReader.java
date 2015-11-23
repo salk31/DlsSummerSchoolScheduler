@@ -3,7 +3,7 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss.domain.readers;
+package uk.ac.diamond.ss.domain.in;
 
 import org.apache.poi.ss.usermodel.Sheet;
 

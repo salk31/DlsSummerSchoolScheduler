@@ -18,90 +18,90 @@ import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Facility;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
-import uk.ac.diamond.ss.domain.readers.KeyValuesReader;
+import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 
 /**
  * A candidate solution to the scheduling problem.
  */
 @PlanningSolution
+public class PlannerSolution implements
+		org.optaplanner.core.api.domain.solution.Solution<HardSoftLongScore> {
 
-public class PlannerSolution implements org.optaplanner.core.api.domain.solution.Solution<HardSoftLongScore> {
+	// Problem facts
+	private List<Person> people = new ArrayList<Person>();
 
-    // Problem facts
-    private List<Person> people = new ArrayList<Person>();
+	private List<Shift> shifts = new ArrayList<Shift>();
 
-    private List<Shift> shifts = new ArrayList<Shift>();
+	// Problem entities
+	private List<Allocation> allocations = new ArrayList<Allocation>();
 
-    // Problem entities
-    private List<Allocation> allocations = new ArrayList<Allocation>();
+	private List facts = new ArrayList();
 
-    private List facts = new ArrayList();
+	private HardSoftLongScore score;
 
-    private HardSoftLongScore score;
+	public PlannerSolution() {
+	}
 
-    public PlannerSolution() {
-    }
+	@Override
+	public Collection<? extends Object> getProblemFacts() {
+		facts.addAll(people);
+		facts.addAll(shifts);
+		return facts;
+	}
 
-    @Override
-    public Collection<? extends Object> getProblemFacts() {
-        facts.addAll(people);
-        facts.addAll(shifts);
-        return facts;
-    }
+	@Override
+	public HardSoftLongScore getScore() {
+		return score;
+	}
 
-    @Override
-    public HardSoftLongScore getScore() {
-        return score;
-    }
+	@Override
+	public void setScore(HardSoftLongScore p) {
+		this.score = p;
+	}
 
-    @Override
-    public void setScore(HardSoftLongScore p) {
-        this.score = p;
-    }
+	public List<Person> getPeople() {
+		return people;
+	}
 
-    public List<Person> getPeople() {
-        return people;
-    }
+	public void setPeople(List<Person> people) {
+		this.people = people;
+	}
 
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
+	@ValueRangeProvider(id = "shifts")
+	public List<Shift> getShifts() {
+		return shifts;
+	}
 
-    @ValueRangeProvider(id = "shifts")
-    public List<Shift> getShifts() {
-        return shifts;
-    }
+	public void setShifts(List<Shift> sh) {
+		this.shifts = sh;
+	}
 
-    public void setShifts(List<Shift> sh) {
-        this.shifts = sh;
-    }
+	@PlanningEntityCollectionProperty
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
 
-    @PlanningEntityCollectionProperty
-    public List<Allocation> getAllocations() {
-        return allocations;
-    }
+	public void setAllocations(List<Allocation> list) {
+		this.allocations = list;
+	}
 
-    public void setAllocations(List<Allocation> list) {
-        this.allocations = list;
-    }
+	public void setAllocations() {
+		this.allocations = createAllocationList();
+	}
 
-    public void setAllocations() {
-        this.allocations = createAllocationList();
-    }
-
-    private List<Allocation> createAllocationList() {
-        int id = 0;
-        List<Allocation> alloList = new ArrayList<Allocation>();
-        for (int i = 0; i < KeyValuesReader.SHIFTS_PER_STUDENT; i++) {
-            for (Person p : getPeople()) {
-                Allocation allocation = new Allocation();
-                allocation.setPerson(p);
-                allocation.setID(id);
-                id++;
-                alloList.add(allocation);
-            }
-        }
-        return alloList;
-    }
+	private List<Allocation> createAllocationList() {
+		int id = 0;
+		List<Allocation> alloList = new ArrayList<Allocation>();
+		for (int i = 0; i < KeyValuesReader.SHIFTS_PER_STUDENT; i++) {
+			for (Person p : getPeople()) {
+				Allocation allocation = new Allocation();
+				allocation.setPerson(p);
+				allocation.setID(id);
+				id++;
+				alloList.add(allocation);
+			}
+		}
+		return alloList;
+	}
 
 }

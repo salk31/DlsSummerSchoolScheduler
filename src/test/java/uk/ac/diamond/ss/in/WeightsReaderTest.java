@@ -3,7 +3,7 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss.readers;
+package uk.ac.diamond.ss.in;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,14 +13,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
-import uk.ac.diamond.ss.domain.readers.WeightsReader;
+import uk.ac.diamond.ss.domain.in.WeightsReader;
 
-
-
-/**
- *
- *
- */
 public class WeightsReaderTest {
 
     @Test

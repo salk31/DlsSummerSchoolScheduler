@@ -14,17 +14,18 @@ import org.optaplanner.core.api.solver.SolverFactory;
 
 public class PlannerEngine {
 
-    private final Solver solver;
+	private final Solver solver;
 
-    public PlannerEngine() {
-        //System.setProperty("drools.dialect.java.compiler", "JANINO");
+	public PlannerEngine() {
+		// System.setProperty("drools.dialect.java.compiler", "JANINO");
 
-        SolverFactory solverFactory = SolverFactory.createFromXmlResource("solverConfig.xml");
+		SolverFactory solverFactory = SolverFactory
+				.createFromXmlResource("solverConfig.xml");
 
-        solver = solverFactory.buildSolver();
-    }
+		solver = solverFactory.buildSolver();
+	}
 
-    public Solver getSolver() {
-        return solver;
-    }
+	public Solver getSolver() {
+		return solver;
+	}
 }

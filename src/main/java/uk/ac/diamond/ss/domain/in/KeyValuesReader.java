@@ -3,7 +3,7 @@
  * Copyright © 2015 Diamond Light Source Ltd
  */
 
-package uk.ac.diamond.ss.domain.readers;
+package uk.ac.diamond.ss.domain.in;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -15,7 +15,7 @@ public class KeyValuesReader {
     public static int MAX_PREFERENCES = 5; // default 5
 
     public static int SHIFTS_LENGHT = 6;// Length of a shift in hours
-    public static int SHIFTS_OFFSET = 12;// no experiments at night
+    //public static int SHIFTS_OFFSET = 12;// no experiments at night
 
     public KeyValuesReader(Sheet sheet) {
         this.sheet = sheet;
