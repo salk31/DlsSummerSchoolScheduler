@@ -120,19 +120,15 @@ public class SummaryWriter {
 		return colect;
 	}
 
-	private double percentage(PlannerSolution ps, int num) {
+	private double percentage(PlannerSolution ps, int num1) {
 		int calc = 0;
 		int used_num = 0;
-		int long_flag = 0;
-		num = Person.mapPreference(num);
+		int num = Person.mapPreference(num1);
 		for (Person pl : people) {
 			for (Allocation p : ps.getAllocations()) {
-				if (p.getPerson().getName().equals(pl.getName())
-						&& pl.checkPreference(p.getShift()) == num) {
+				if (p.getPerson().getName().equals(pl.getName()) && pl.checkPreference(p.getShift()) == num) {
 					calc++;
-					if (p.getShift().getPair() != null) {
-						long_flag++;// long experiments counted once
-					}
+					break;
 				}
 			}
 			// how many people actually included this preference
@@ -140,8 +136,6 @@ public class SummaryWriter {
 				used_num++;
 			}
 		}
-		// long experiments counted once
-		calc = calc - (long_flag/2);
 		return 100 * ((double) calc / used_num);
 	}
 
