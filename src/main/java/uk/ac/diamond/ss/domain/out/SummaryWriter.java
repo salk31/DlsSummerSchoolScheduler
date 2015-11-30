@@ -68,8 +68,8 @@ public class SummaryWriter {
 		c51.setCellValue(percentage(solution, 5));
 
 		Row headerRow1 = sheet.createRow(6);
-		headerRow1.createCell(0).setCellValue("Size");
-		headerRow1.createCell(1).setCellValue("How Many Shifts");
+		headerRow1.createCell(0).setCellValue("Size of Group");
+		headerRow1.createCell(1).setCellValue("How Many Groups");
 		// calculates size of group for each shift
 		Map<Integer, Integer> shift_size = groupSize(solution);
 		// how many shifts of a particular size there ware
@@ -131,7 +131,7 @@ public class SummaryWriter {
 						&& pl.checkPreference(p.getShift()) == num) {
 					calc++;
 					if (p.getShift().getPair() != null) {
-						long_flag = 1;// long experiments counted once
+						long_flag++;// long experiments counted once
 					}
 				}
 			}
@@ -141,7 +141,7 @@ public class SummaryWriter {
 			}
 		}
 		// long experiments counted once
-		calc = calc - long_flag;
+		calc = calc - (long_flag/2);
 		return 100 * ((double) calc / used_num);
 	}
 

@@ -51,7 +51,7 @@ public class PersonReader {
                 Cell cell = row.getCell(c);
                 int preference = 0;
                 if (cell != null) {
-                    preference = person.mapPreference((int) cell.getNumericCellValue());
+                    preference = Person.mapPreference((int) cell.getNumericCellValue());
                     preferences.put(facs.get(c-1),preference);
                 }
             }

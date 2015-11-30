@@ -23,6 +23,7 @@ import uk.ac.diamond.ss.domain.Correlation;
 import uk.ac.diamond.ss.domain.Facility;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
+import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 import uk.ac.diamond.ss.domain.in.WeightsReader;
 
 public class PlannerTest {
@@ -33,6 +34,7 @@ public class PlannerTest {
 		Solver solver = pe.getSolver();
 		// 4 out of 10 beamlines implemented
 		Facility frac1 = Facility.getOrCreate("I11", 101);
+		frac1.setLong();
 		Facility frac2 = Facility.getOrCreate("I06", 102);
 		Facility frac3 = Facility.getOrCreate("I07", 103);
 		Facility frac4 = Facility.getOrCreate("I15", 104);
@@ -128,8 +130,8 @@ public class PlannerTest {
 			if (constraintMatchTotal.getConstraintName().equals(
 					"preferencesSoft")) {
 				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -6*WeightsReader.PREFERENCES);// the total preference is 2*sum of all
-											// preferences given
+						.intValue(), -5*WeightsReader.PREFERENCES);// the total preference is sum of all
+											// preferences given (long experiments counted twice
 			}
 			if (constraintMatchTotal.getConstraintName()
 					.equals("groupSizeSoft")) {
@@ -167,11 +169,21 @@ public class PlannerTest {
 		}
 
 		solver.solve(prob);
+
+		//solution time test
+		long timeMinutes = solver.getTimeMillisSpent()/60000;	
+		if(timeMinutes < KeyValuesReader.TERMINATION_TOTAL_TIME){
+			assertTrue(timeMinutes >= KeyValuesReader.TERMINATION_TIME_UNIMPROVED);
+		}
+		else{
+			assertTrue(timeMinutes == KeyValuesReader.TERMINATION_TOTAL_TIME);
+		}
+		
 		PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
+		
 		// final score - works only for the default of weights in WeightsReader!!!!!
 		// -6 as there are 4 out 10 beamlines implemented for the tests
-		// -1 soft preference weight for I06
-		assertEquals("-6hard/-1soft", "" + ps.getScore());
+		assertEquals("-6hard/0soft", "" + ps.getScore());
 
 		// final weights
 		guiScoreDirector.setWorkingSolution(ps);
@@ -210,8 +222,8 @@ public class PlannerTest {
 			if (constraintMatchTotal.getConstraintName().equals(
 					"preferencesSoft")) {
 				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);// meet preferences - long experiment
-											// so can get zero to 0
+						.intValue(), 0);// meet preferences - long experiment
+											// so can get zero 0
 			}
 			if (constraintMatchTotal.getConstraintName()
 					.equals("groupSizeSoft")) {

@@ -16,13 +16,7 @@
       <!--<easyScoreCalculatorClass>org.optaplanner.examples.nqueens.solver.score.NQueensEasyScoreCalculator</easyScoreCalculatorClass>-->
     <!--</assertionScoreDirectorFactory>-->
   </scoreDirectorFactory>
-
- 
-  <termination>
-  <terminationCompositionStyle>OR</terminationCompositionStyle>
-   <secondsSpentLimit>10</secondsSpentLimit> 
-   <unimprovedMinutesSpentLimit>1</unimprovedMinutesSpentLimit>
-  </termination>
+  
   <constructionHeuristic>
     <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
   </constructionHeuristic>

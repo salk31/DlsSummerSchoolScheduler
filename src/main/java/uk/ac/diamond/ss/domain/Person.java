@@ -67,22 +67,32 @@ public class Person {
 	}
 
 	public boolean isFirstPreference(Shift s) {
-		return checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES;
+			return checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES;
 	}
+	
+	public boolean isFirstOrSecondPreference(Shift s) {
+		if(preferencesInclude(KeyValuesReader.MAX_PREFERENCES)||preferencesInclude(KeyValuesReader.MAX_PREFERENCES-1)){
+			return checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES||checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES-1;
+		}
+		return true;
+	}
+	
 
 	public int getSumPreference() {
 		int sum = 0;
-		for (int i : preferences.values()) {
-			sum = sum + i;
+		for(Facility f: preferences.keySet()){		
+			int value = preferences.get(f).intValue();
+			sum = sum + value;
+			if(f.longExperiment){
+				sum = sum + value;//long experiments twice
+			}
 		}
-		return 2 * sum;// 2 is needed because of the long experiments
+		return sum; 
 	}
 
 	public boolean preferencesInclude(int num) {
-		for (int i : preferences.values()) {
-			if (i == num) {
+		if(preferences.values().contains(num)){
 				return true;
-			}
 		}
 		return false;
 	}

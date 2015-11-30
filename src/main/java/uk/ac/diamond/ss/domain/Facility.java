@@ -31,6 +31,7 @@ public class Facility {
 	private final String name;
 	private int id;
 	private List<Correlation> correlations = new ArrayList<Correlation>();
+	boolean longExperiment = false;
 
 	public Facility(String name) {
 		this.name = name;
@@ -73,5 +74,9 @@ public class Facility {
 			}
 		}
 		return 0;
+	}
+
+	public void setLong() {
+		longExperiment  = true;	
 	}
 }

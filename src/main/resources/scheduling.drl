@@ -192,3 +192,13 @@ then
  scoreHolder.addSoftConstraintMatch(kcontext, pref*(-$totalPreference  + $totalPreferences.intValue()));
 end
 
+rule "firsPreferencesHard"
+ 	when
+ 	Person($aPersonID : getID())	
+ 	$total : Number(intValue<2) from accumulate(
+ 		$a:  Allocation(getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, getPerson().isFirstOrSecondPreference(getShift())),
+ 		count($a)
+ 		)
+ 	then
+   	scoreHolder.addHardConstraintMatch(kcontext,($total.intValue()-1));
+end
