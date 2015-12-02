@@ -28,17 +28,26 @@ public class ShiftReader{
         Row firstRow = sheet.getRow(0);
         Row secondRow = sheet.getRow(1);
         Row thirdRow = sheet.getRow(2);
+        if(firstRow == null || secondRow == null || thirdRow == null){
+        	return result;
+        }
         int count = 0;
         for (short c = 1; c < firstRow.getLastCellNum(); c++) {
             //facility name
-            Cell cellFirst = firstRow.getCell(c);
-            Facility facility = Facility.getOrCreate(cellFirst.getStringCellValue(),c-1);
+            Cell cellFirst = firstRow.getCell(c);         
             //Period length
             Cell cellSecond = secondRow.getCell(c);
-            int type = (int) cellSecond.getNumericCellValue();
             //Starting periods
             Cell cellThird = thirdRow.getCell(c);
+            
+            if(cellFirst == null || cellSecond == null || cellThird == null){
+            	continue;
+            }
+            
+            Facility facility = Facility.getOrCreate(cellFirst.getStringCellValue(),c-1);
+            int type = (int) cellSecond.getNumericCellValue();
             String s = cellThird.getStringCellValue();
+            
             //Create shifts accordingly
             for (String retval: s.split(",")){
                 Shift sf = new Shift(facility,count);

@@ -35,7 +35,7 @@ public class FacilityTest {
 		// different correlation rate means the two correlations are not the
 		// same..hmmm
 	}
-
+	@Test
 	public void checkCorrelationTest() {
 		Set<Facility> sf = new HashSet<Facility>();
 		Facility frac1 = Facility.getOrCreate("I11", 101);

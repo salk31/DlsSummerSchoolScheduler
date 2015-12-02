@@ -71,6 +71,9 @@ public class Person {
 	}
 	
 	public boolean isFirstOrSecondPreference(Shift s) {
+		if(WeightsReader.FIRST_SECOND == 0) {
+			return true;
+		}
 		if(preferencesInclude(KeyValuesReader.MAX_PREFERENCES)||preferencesInclude(KeyValuesReader.MAX_PREFERENCES-1)){
 			return checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES||checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES-1;
 		}

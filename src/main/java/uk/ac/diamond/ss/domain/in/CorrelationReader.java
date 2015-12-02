@@ -33,6 +33,9 @@ public class CorrelationReader {
         List<Correlation> result = new ArrayList<Correlation>();
         for (short r = 0; r <=sheet.getLastRowNum(); r++) {
             Row row = sheet.getRow(r);
+            if(row == null){
+            	continue;
+            }
             Set<Facility> para = new HashSet();
             Cell n1 = row.getCell(0);
             Cell n2 = row.getCell(1);

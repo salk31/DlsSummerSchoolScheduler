@@ -34,15 +34,26 @@ public class PersonReader {
 
         // read first row for preference names
         Row firstRow = sheet.getRow(0);
+        if(firstRow == null){
+        	return result;
+        }
         List<Facility> facs = new ArrayList<Facility>();
-        for (short c = 1; c < firstRow.getLastCellNum(); c++) {
+        for (short c = 1; c < firstRow.getLastCellNum(); c++) {      	
             Cell cell = firstRow.getCell(c);
             facs.add(Facility.getOrCreate(cell.getStringCellValue(),c-1));
         }
         // read data rows
-        for (short r = 1; r <=sheet.getLastRowNum(); r++) {
+        for (short r = 1; r <= sheet.getLastRowNum(); r++) {
             Row row = sheet.getRow(r);
-            String name = row.getCell(0).getStringCellValue();
+            if(row == null){
+            	continue;
+            }
+            
+            Cell cell0 = row.getCell(0);
+            if(cell0 == null){
+            	continue;
+            }
+            String name = cell0.getStringCellValue();
             Person person = new Person(name);
             person.setID(r);
 
@@ -58,7 +69,6 @@ public class PersonReader {
             person.setPereferences(preferences);
             result.add(person);
         }
-
         return result;
     }
 

@@ -25,7 +25,7 @@ public class WeightsReaderTest {
 
         assertEquals(WeightsReader.LONG_EXPERIMANTS ,6);
         assertEquals(WeightsReader.GROUP_SIZE_HARD, 1);
-       assertEquals(WeightsReader.CORRELATION ,1);
+        assertEquals(WeightsReader.CORRELATION ,1);
     }
 
 }

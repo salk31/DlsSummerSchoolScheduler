@@ -192,7 +192,7 @@ then
  scoreHolder.addSoftConstraintMatch(kcontext, pref*(-$totalPreference  + $totalPreferences.intValue()));
 end
 
-rule "firsPreferencesHard"
+rule "firstPreferencesHard"
  	when
  	Person($aPersonID : getID())	
  	$total : Number(intValue<2) from accumulate(
