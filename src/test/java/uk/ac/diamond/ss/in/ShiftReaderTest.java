@@ -6,7 +6,7 @@
 package uk.ac.diamond.ss.in;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,14 +23,14 @@ import uk.ac.diamond.ss.domain.in.ShiftReader;
 
 
 public class ShiftReaderTest {
-	
+
 	@Test
 	public void readTest() throws EncryptedDocumentException, InvalidFormatException, IOException{
 	  InputStream inputStream = getClass().getResourceAsStream("/minimalProblemAndSolution.xlsx");
       Workbook wb = WorkbookFactory.create(inputStream);
-      //List<Shift> stest = new ShiftReader(wb.getSheet("")).read();
-      //assertEquals(stest.size(),);
-      
+      List<Shift> stest = new ShiftReader(wb.getSheet("periods")).read();
+      assertEquals(stest.size(),6);
+
 	}
 
 }
