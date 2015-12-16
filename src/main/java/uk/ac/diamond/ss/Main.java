@@ -29,13 +29,18 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		String filename = "problem1.xlsx";// problem
+		
 		if (args.length > 0) {
 			filename = args[0];
 		}
-
+		
+		String filaname_copy = "solution_"+filename;
+		
 		InputStream inputStream = new FileInputStream(filename);
+		
 		Workbook wb = WorkbookFactory.create(inputStream);
-
+		
+		
 		PersonReader pr = new PersonReader(wb.getSheet("candidate_preferences"));
 
 		ShiftReader sr = new ShiftReader(wb.getSheet("periods"));
@@ -61,8 +66,8 @@ public class Main {
 
 		PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
 
+		
 		Sheet solutionSheet = null;
-
 		if (wb.getSheet("solution") == null) {
 			solutionSheet = wb.createSheet("solution");
 		}
@@ -83,7 +88,7 @@ public class Main {
 		new SolutionWriter(solutionSheet, people).write(ps, style);
 
 		new SummaryWriter(summarySheet, people, shifts).writeAvg(ps);
-		wb.write(new FileOutputStream(filename));
+		wb.write(new FileOutputStream(filaname_copy));
 
 		new ScorePrinter(solver).print(ps);
 	}
