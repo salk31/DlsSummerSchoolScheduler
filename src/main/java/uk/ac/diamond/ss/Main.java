@@ -20,6 +20,7 @@ import uk.ac.diamond.ss.domain.in.CorrelationReader;
 import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 import uk.ac.diamond.ss.domain.in.PersonReader;
 import uk.ac.diamond.ss.domain.in.ShiftReader;
+import uk.ac.diamond.ss.domain.in.SolverConfigXMLParser;
 import uk.ac.diamond.ss.domain.in.WeightsReader;
 import uk.ac.diamond.ss.domain.out.ScorePrinter;
 import uk.ac.diamond.ss.domain.out.SolutionWriter;
@@ -27,20 +28,20 @@ import uk.ac.diamond.ss.domain.out.SummaryWriter;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Throwable {
 		String filename = "problem1.xlsx";// problem
-		
+
 		if (args.length > 0) {
 			filename = args[0];
 		}
-		
+
 		String filaname_copy = "solution_"+filename;
-		
+
 		InputStream inputStream = new FileInputStream(filename);
-		
+
 		Workbook wb = WorkbookFactory.create(inputStream);
-		
-		
+
+
 		PersonReader pr = new PersonReader(wb.getSheet("candidate_preferences"));
 
 		ShiftReader sr = new ShiftReader(wb.getSheet("periods"));
@@ -48,6 +49,12 @@ public class Main {
 		CorrelationReader cr = new CorrelationReader(wb.getSheet("correlation"));
 
 		(new KeyValuesReader(wb.getSheet("key_values"))).read();
+		if( KeyValuesReader.RANDOM == 1){
+		    new SolverConfigXMLParser().setRandomSeedValue((int) Math.floor(Math.random() * 101), "src/main/resources/solverConfig_org.xml", "src/main/resources/solverConfig.xml");
+		}
+		if( KeyValuesReader.RANDOM == 0){
+            new SolverConfigXMLParser().setRandomSeedValue(0, "src/main/resources/solverConfig_org.xml", "src/main/resources/solverConfig.xml");
+        }
 		(new WeightsReader(wb.getSheet("weights"))).read();
 
 		PlannerEngine pe = new PlannerEngine();
@@ -66,7 +73,7 @@ public class Main {
 
 		PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
 
-		
+
 		Sheet solutionSheet = null;
 		if (wb.getSheet("solution") == null) {
 			solutionSheet = wb.createSheet("solution");

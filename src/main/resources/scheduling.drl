@@ -34,6 +34,7 @@ rule "groupSizeHard1"
     scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
 end
 
+
 rule "groupSizeHard2"
  when
     	$total : Number(intValue < 1) from accumulate(
@@ -138,8 +139,6 @@ rule "groupSizeHard"
    int groupHard = WeightsReader.GROUP_SIZE_HARD;
     scoreHolder.addHardConstraintMatch(kcontext,-groupHard*$total.intValue());
 end
-
-
 
 rule "noOverlappingAllocationsHard"
    when

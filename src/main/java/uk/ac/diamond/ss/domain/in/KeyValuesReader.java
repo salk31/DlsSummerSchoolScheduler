@@ -15,16 +15,18 @@ public class KeyValuesReader {
     public static int MAX_PREFERENCES = 5; // default 5
 
     public static int SHIFTS_LENGHT = 6;// Length of a shift in hours
-    
+
     public static long TERMINATION_TOTAL_TIME = 2;//minutes
     public static long TERMINATION_TIME_UNIMPROVED = 1;
+
+    public static int RANDOM = 1;// 1- on 0 -off
 
     public KeyValuesReader(Sheet sheet) {
         this.sheet = sheet;
     }
 
     public void read() {
-        if (sheet.getRow(0) != null){ 
+        if (sheet.getRow(0) != null){
         	if (sheet.getRow(0).getCell(1) != null){
         		SHIFTS_PER_STUDENT = (int) sheet.getRow(0).getCell(1).getNumericCellValue();
         	}
@@ -45,9 +47,21 @@ public class KeyValuesReader {
         	}
         }
         if (sheet.getRow(4) != null){
-        	if(sheet.getRow(4).getCell(1) != null) {   
+        	if(sheet.getRow(4).getCell(1) != null) {
         	TERMINATION_TIME_UNIMPROVED = (long) sheet.getRow(4).getCell(1).getNumericCellValue();
         	}
         }
+
+        if (sheet.getRow(4) != null){
+            if(sheet.getRow(4).getCell(1) != null) {
+            TERMINATION_TIME_UNIMPROVED = (long) sheet.getRow(4).getCell(1).getNumericCellValue();
+            }
+        }
+        if (sheet.getRow(5) != null){
+            if(sheet.getRow(5).getCell(1) != null) {
+                RANDOM = (int) sheet.getRow(5).getCell(1).getNumericCellValue();
+            }
+        }
+
     }
 }

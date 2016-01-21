@@ -2,7 +2,7 @@
   
   <solutionClass>uk.ac.diamond.ss.PlannerSolution</solutionClass>
   <entityClass>uk.ac.diamond.ss.domain.Allocation</entityClass>
-  <randomSeed>23</randomSeed>
+  <randomSeed>10</randomSeed>
    
    
   <scoreDirectorFactory>
