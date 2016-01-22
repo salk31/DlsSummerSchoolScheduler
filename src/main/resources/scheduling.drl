@@ -23,110 +23,17 @@ rule "groupSizeSoft"
     scoreHolder.addSoftConstraintMatch(kcontext,-groupSoft*($total.intValue()*$total.intValue()));
 end
 
-
-rule "groupSizeHard1"
+rule "groupSizeHard1_6"
  when
+ 		Facility($facility_name : getName())
     	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I11'), 
+    		$a : Allocation(getShift() != null, getShift().getFacility().getName() ==  $facility_name), 
     		count($a)
     	)
     then
     scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
 end
 
-
-rule "groupSizeHard2"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I06'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-rule "groupSizeHard3"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I07'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-rule "groupSizeHard4"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I15'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-
-rule "groupSizeHard5"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I16'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-
-rule "groupSizeHard6"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'B16'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-
-rule "groupSizeHard7"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I18'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-rule "groupSizeHard8"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'B18'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-rule "groupSizeHard9"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I19'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
-
-rule "groupSizeHard10"
- when
-    	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() == 'I22'), 
-    		count($a)
-    	)
-    then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
-end
 
 rule "groupSizeHard"
     when
