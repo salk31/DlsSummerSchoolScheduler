@@ -18,7 +18,7 @@ public class PersonTest {
 	@Test
 	public void checkPreferenceTest() {
 		createPreferences();
-		
+
 		assertEquals(p.checkPreference(sh), 3);
 		assertEquals(p.checkPreference(sh1), 0);
 		Shift sh2 = new Shift(null, 3);
@@ -37,7 +37,7 @@ public class PersonTest {
 		assertTrue(p.isFirstPreference(sh2));
 		assertFalse(p.isFirstPreference(sh));
 	}
-	
+
 	@Test
 	public void sumPreferenceTest() {
 		createPreferences();
@@ -72,7 +72,7 @@ public class PersonTest {
 		sh = new Shift(frac1, 0, 0, 1);
 		sh1 = new Shift(frac4, 1, 0, 1);
 		sh2 = new Shift(frac3, 2, 0, 1);
-		p = new Person("Aureliusz");
+		p = new Person("Aureliusz",55);
 		p.setPereferences(preferences);
 	}
 

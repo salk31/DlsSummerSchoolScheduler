@@ -23,7 +23,7 @@ import uk.ac.diamond.ss.domain.out.SolutionWriter;
 
 public class SolutionWriterTest {
 
-	private Person p = new Person("Ola");
+	private Person p = new Person("Ola",57);
 
 	@Test
 	public void findPeriodTest() {
@@ -57,7 +57,7 @@ public class SolutionWriterTest {
 		preferences.put(frac1, 2);// preference towards I11
 		p.setPereferences(preferences);
 		// create allocations
-		Person p1 = new Person("Ola");
+		Person p1 = new Person("Ola",56);
 		Allocation allocation = new Allocation();
 		allocation.setPerson(p1);
 		allocation.setID(0);

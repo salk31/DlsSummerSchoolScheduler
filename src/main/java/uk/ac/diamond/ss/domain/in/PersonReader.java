@@ -38,7 +38,7 @@ public class PersonReader {
         	return result;
         }
         List<Facility> facs = new ArrayList<Facility>();
-        for (short c = 1; c < firstRow.getLastCellNum(); c++) {      	
+        for (short c = 1; c < firstRow.getLastCellNum(); c++) {
             Cell cell = firstRow.getCell(c);
             facs.add(Facility.getOrCreate(cell.getStringCellValue(),c-1));
         }
@@ -48,14 +48,14 @@ public class PersonReader {
             if(row == null){
             	continue;
             }
-            
+
             Cell cell0 = row.getCell(0);
             if(cell0 == null){
             	continue;
             }
             String name = cell0.getStringCellValue();
-            Person person = new Person(name);
-            person.setID(r);
+            Person person = new Person(name,r);
+
 
             Map<Facility,Integer> preferences = new HashMap<Facility, Integer>();
             for (short c = 1; c < row.getLastCellNum(); c++) {

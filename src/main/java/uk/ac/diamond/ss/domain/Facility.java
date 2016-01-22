@@ -68,7 +68,7 @@ public class Facility {
 
 	public int checkCorrelations(Facility facility) {
 		for (Correlation c : correlations) {
-			if (!facility.getName().equals(this.name)) {
+			if (!facility.equals(this)) {
 				c.getSetFacility().contains(facility);
 				return c.getRate();
 			}
@@ -77,6 +77,6 @@ public class Facility {
 	}
 
 	public void setLong() {
-		longExperiment  = true;	
+		longExperiment  = true;
 	}
 }

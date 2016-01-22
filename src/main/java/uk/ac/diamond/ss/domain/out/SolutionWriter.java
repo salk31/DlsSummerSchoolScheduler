@@ -80,7 +80,7 @@ public class SolutionWriter {
 
 	public String findPeriod(Person p, int num) {
 		for (Allocation a : allocations) {
-			if (a.getPerson().getName().equals(p.getName())
+			if (a.getPerson().getID() == p.getID()
 					&& a.getShift().getStartTime() == num
 							* KeyValuesReader.SHIFTS_LENGHT) {
 				return a.getShift().getFacility().getName();
@@ -91,7 +91,7 @@ public class SolutionWriter {
 
 	public boolean checkPreference(Person p, int num) {
 		for (Allocation a : allocations) {
-			if (a.getPerson().getName().equals(p.getName())
+			if (a.getPerson().getID() == p.getID()
 					&& a.getShift().getStartTime() == num
 							* KeyValuesReader.SHIFTS_LENGHT
 					&& p.isPreference(a.getShift())) {

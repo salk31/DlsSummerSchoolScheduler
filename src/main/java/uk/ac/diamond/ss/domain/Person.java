@@ -14,22 +14,16 @@ import uk.ac.diamond.ss.domain.in.WeightsReader;
 public class Person {
 
 	private String name;
-	private int ID;
+	private final int ID;
 	private Map<Facility, Integer> preferences = new HashMap<Facility, Integer>();
 
-	public Person() {
-	}
-
-	public Person(String name) {
+	public Person(String name, int id) {
 		this.name = name;
+		this.ID = id;
 	}
 
 	public int getID() {
 		return ID;
-	}
-
-	public void setID(int anID) {
-		this.ID = anID;
 	}
 
 	public String getName() {
@@ -63,13 +57,13 @@ public class Person {
 	}
 
 	public boolean isPreference(Shift s) {
-		return (checkPreference(s) > 0 ? true: false);	
+		return (checkPreference(s) > 0 ? true: false);
 	}
 
 	public boolean isFirstPreference(Shift s) {
 			return checkPreference(s)  == KeyValuesReader.MAX_PREFERENCES;
 	}
-	
+
 	public boolean isFirstOrSecondPreference(Shift s) {
 		if(WeightsReader.FIRST_SECOND == 0) {
 			return true;
@@ -79,18 +73,17 @@ public class Person {
 		}
 		return true;
 	}
-	
 
 	public int getSumPreference() {
 		int sum = 0;
-		for(Facility f: preferences.keySet()){		
+		for(Facility f: preferences.keySet()){
 			int value = preferences.get(f).intValue();
 			sum = sum + value;
 			if(f.longExperiment){
 				sum = sum + value;//long experiments twice
 			}
 		}
-		return sum; 
+		return sum;
 	}
 
 	public boolean preferencesInclude(int num) {

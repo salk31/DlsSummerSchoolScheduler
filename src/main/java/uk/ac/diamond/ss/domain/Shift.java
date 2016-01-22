@@ -44,7 +44,7 @@ public class Shift {
 	}
 
 	public boolean getSimilar(Shift s) {
-		if (s.getFacility().getName().equals(facility.getName())) {
+		if (s.getFacility().equals(facility)) {
 			if (pair != null && s == pair) {
 				return false;
 			}

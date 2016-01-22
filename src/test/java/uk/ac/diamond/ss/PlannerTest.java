@@ -46,9 +46,7 @@ public class PlannerTest {
 		String[] names = new String[] { "Ginger", "Blue" };
 		int id = 1;
 		for (String name : names) {
-			Person p = new Person(name);
-			p.setName(name);
-			p.setID(id);
+			Person p = new Person(name,id);
 			if (name.equals("Ginger")) {
 				// Ginger is expected to get I11 and I06
 				p.setPereferences(preferences);// only Ginger gets preferences
@@ -108,26 +106,6 @@ public class PlannerTest {
 						.intValue(), -1);
 			}
 			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard2")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard3")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard4")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard5")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
 					"preferencesSoft")) {
 				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
 						.intValue(), -5*WeightsReader.PREFERENCES);// the total preference is sum of all
@@ -171,19 +149,19 @@ public class PlannerTest {
 		solver.solve(prob);
 
 		//solution time test
-		long timeMinutes = solver.getTimeMillisSpent()/60000;	
+		long timeMinutes = solver.getTimeMillisSpent()/60000;
 		if(timeMinutes < KeyValuesReader.TERMINATION_TOTAL_TIME){
 			assertTrue(timeMinutes >= KeyValuesReader.TERMINATION_TIME_UNIMPROVED);
 		}
 		else{
 			assertTrue(timeMinutes == KeyValuesReader.TERMINATION_TOTAL_TIME);
 		}
-		
+
 		PlannerSolution ps = (PlannerSolution) solver.getBestSolution();
-		
+
 		// final score - works only for the default of weights in WeightsReader!!!!!
 		// -6 as there are 4 out 10 beamlines implemented for the tests
-		assertEquals("-6hard/0soft", "" + ps.getScore());
+		assertEquals("0hard/0soft", "" + ps.getScore());
 
 		// final weights
 		guiScoreDirector.setWorkingSolution(ps);
@@ -193,31 +171,6 @@ public class PlannerTest {
 					"groupSizeHard1")) {
 				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
 						.intValue(), 0);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard2")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), 0);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard3")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), 0);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard4")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), 0);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard5")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
-			}
-			if (constraintMatchTotal.getConstraintName().equals(
-					"groupSizeHard6")) {
-				assertEquals(constraintMatchTotal.getWeightTotalAsNumber()
-						.intValue(), -1);
 			}
 			if (constraintMatchTotal.getConstraintName().equals(
 					"preferencesSoft")) {
