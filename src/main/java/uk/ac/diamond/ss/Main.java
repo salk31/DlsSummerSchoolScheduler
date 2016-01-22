@@ -20,7 +20,6 @@ import uk.ac.diamond.ss.domain.in.CorrelationReader;
 import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 import uk.ac.diamond.ss.domain.in.PersonReader;
 import uk.ac.diamond.ss.domain.in.ShiftReader;
-import uk.ac.diamond.ss.domain.in.SolverConfigXMLParser;
 import uk.ac.diamond.ss.domain.in.WeightsReader;
 import uk.ac.diamond.ss.domain.out.ScorePrinter;
 import uk.ac.diamond.ss.domain.out.SolutionWriter;
@@ -49,12 +48,7 @@ public class Main {
 		CorrelationReader cr = new CorrelationReader(wb.getSheet("correlation"));
 
 		(new KeyValuesReader(wb.getSheet("key_values"))).read();
-		if( KeyValuesReader.RANDOM == 1){
-		    new SolverConfigXMLParser().setRandomSeedValue((int) Math.floor(Math.random() * 101), "src/main/resources/solverConfig_org.xml", "src/main/resources/solverConfig.xml");
-		}
-		if( KeyValuesReader.RANDOM == 0){
-            new SolverConfigXMLParser().setRandomSeedValue(0, "src/main/resources/solverConfig_org.xml", "src/main/resources/solverConfig.xml");
-        }
+
 		(new WeightsReader(wb.getSheet("weights"))).read();
 
 		PlannerEngine pe = new PlannerEngine();

@@ -12,6 +12,7 @@ import org.optaplanner.core.config.solver.termination.TerminationConfig;
 
 import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 
+
 /**
  * Wrapper around optiplanner.
  */
@@ -25,12 +26,15 @@ public class PlannerEngine {
 
 		SolverFactory solverFactory = SolverFactory
 				.createFromXmlResource("solverConfig.xml");
-	        
+		if( KeyValuesReader.RANDOM == 1){
+		    solverFactory.getSolverConfig().setRandomSeed((long) Math.floor(Math.random() * 101));
+		    System.out.println((long) Math.floor(Math.random() * 101));
+        }
 	    solverFactory.getSolverConfig().setTerminationConfig(setTermination());
 
 		solver = solverFactory.buildSolver();
 	}
-	
+
 	private TerminationConfig setTermination(){
 		//termiantion settings
 		 TerminationConfig terminationConfig = new TerminationConfig();
