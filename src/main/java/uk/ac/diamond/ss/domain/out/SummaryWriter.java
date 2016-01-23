@@ -126,7 +126,7 @@ public class SummaryWriter {
 		int num = Person.mapPreference(num1);
 		for (Person pl : people) {
 			for (Allocation p : ps.getAllocations()) {
-				if (p.getPerson().getID() == p.getID() && pl.checkPreference(p.getShift()) == num) {
+				if (p.getPerson().getID() == pl.getID() && pl.checkPreference(p.getShift()) == num) {
 					calc++;
 					break;
 				}
