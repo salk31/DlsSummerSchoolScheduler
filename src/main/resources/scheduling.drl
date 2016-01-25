@@ -13,44 +13,43 @@ global HardSoftLongScoreHolder scoreHolder;
 
 rule "groupSizeSoft"
     when
-    	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID())
+    	Allocation($aid : ID, shift != null, $ashiftID : shift.ID)
     	$total : Number() from accumulate(
-    		$a : Allocation(ID> $aid, getShift() != null, getShift().getID() == $ashiftID), 
+    		$a : Allocation(ID> $aid, shift != null, shift.ID == $ashiftID), 
     		count($a)
     	)
     then
-     int groupSoft = WeightsReader.GROUP_SIZE_SOFT;
-    scoreHolder.addSoftConstraintMatch(kcontext,-groupSoft*($total.intValue()*$total.intValue()));
+    int groupSoft = WeightsReader.GROUP_SIZE_SOFT;
+    scoreHolder.addSoftConstraintMatch(kcontext, -groupSoft*($total.intValue() * $total.intValue()));
 end
 
 rule "groupSizeHard1_6"
  when
- 		Facility($facility_name : getName())
+ 		Facility($facility_name : name)
     	$total : Number(intValue < 1) from accumulate(
-    		$a : Allocation(getShift() != null, getShift().getFacility().getName() ==  $facility_name), 
+    		$a : Allocation(shift != null, shift.facility.name ==  $facility_name), 
     		count($a)
     	)
     then
-    scoreHolder.addHardConstraintMatch(kcontext,$total.intValue()-1);
+    scoreHolder.addHardConstraintMatch(kcontext, $total.intValue()-1);
 end
-
 
 rule "groupSizeHard"
     when
-    	Allocation($aid : ID, getShift() != null, $ashiftID : getShift().getID(), $studentsNumber : getShift().getStudentsPerShift())
+    	Allocation($aid : ID, shift != null, $ashiftID : shift.ID, $studentsNumber : shift.getStudentsPerShift())
     	$total : Number(intValue > $studentsNumber) from accumulate(
-    		$a : Allocation(ID>= $aid, getShift() != null, getShift().getID() == $ashiftID), 
+    		$a : Allocation(ID >= $aid, shift != null, shift.ID == $ashiftID), 
     		count($a)
     	)
     then
    int groupHard = WeightsReader.GROUP_SIZE_HARD;
-    scoreHolder.addHardConstraintMatch(kcontext,-groupHard*$total.intValue());
+    scoreHolder.addHardConstraintMatch(kcontext, -groupHard*$total.intValue());
 end
 
 rule "noOverlappingAllocationsHard"
    when
-  	 Allocation($aid : ID, getShift() != null, $ashift : getShift(), getPerson() != null, $aPersonID : getPerson().getID())
-     Allocation(ID> $aid, getShift() != null, getShift().checkOverlap($ashift), getPerson().getID() == $aPersonID )
+  	 Allocation($aid : ID, shift != null, $ashift : shift, person != null, $aPersonID : person.ID)
+     Allocation(ID > $aid, shift != null, shift.checkOverlap($ashift), person.ID == $aPersonID )
     then
     int noOverlapping = WeightsReader.NO_OVERLAPPING;
     scoreHolder.addHardConstraintMatch(kcontext, - noOverlapping);
@@ -58,8 +57,8 @@ end
 
 rule "noSimilarSesssionsHard"
     when
-    	Allocation($aid : ID, getShift() != null,  $ashift : getShift(),getPerson() != null, $aPersonID : getPerson().getID())
-    	Allocation( ID> $aid,getShift() != null, getShift().getSimilar($ashift), getPerson().getID() == $aPersonID )
+    	Allocation($aid : ID, shift != null,  $ashift : shift, person != null, $aPersonID : person.ID)
+    	Allocation(ID > $aid, shift != null, shift.getSimilar($ashift), person.ID == $aPersonID )
     then
     int noSimilar = WeightsReader.NO_SIMILOAR;
     scoreHolder.addHardConstraintMatch(kcontext, -noSimilar);
@@ -67,44 +66,44 @@ end
 
 rule "correlationSoft"
     when
-    	$a1:Allocation($aid : ID, getShift() != null,  $ashift : getShift(),getPerson() != null, $aPersonID : getPerson().getID())
-    	$a2:Allocation(ID> $aid, getShift() != null, getShift().getCorrelated($ashift)!=0, getPerson().getID() == $aPersonID )
+    	$a1:Allocation($aid : ID, shift != null, $ashift : shift, person != null, $aPersonID : person.ID)
+    	$a2:Allocation(ID > $aid, shift != null, shift.getCorrelated($ashift)!=0, person.ID == $aPersonID )
     then
     int correlation = WeightsReader.CORRELATION;
-    scoreHolder.addSoftConstraintMatch(kcontext,-correlation*$a2.getShift().getCorrelated($a1.getShift()));
+    scoreHolder.addSoftConstraintMatch(kcontext, -correlation*$a2.getShift().getCorrelated($a1.getShift()));
 end
 
 rule "longExperimentsPairsHard"
  	when
- 	Allocation($aid : ID,getShift() != null, $apair: getShift().getPair(), $apair!=null, getPerson() != null, $aPersonID : getPerson().getID())
- 	$total : Number(intValue<2) from accumulate(
- 		$a:  Allocation(ID!=$aid, getShift() != null, getPerson() != null, getShift().getID()== $apair.getID(), getPerson().getID() == $aPersonID),
+ 	Allocation($aid : ID, shift != null, $apair: shift.pair, $apair!=null, person != null, $aPersonID : person.ID)
+ 	$total : Number(intValue < 2) from accumulate(
+ 		$a:  Allocation(ID != $aid, shift != null, person != null, shift.ID == $apair.ID, person.ID == $aPersonID),
  		count($a)
  		)
  	then
  	int longExperimants = WeightsReader.LONG_EXPERIMANTS;
-   	scoreHolder.addHardConstraintMatch(kcontext,longExperimants*($total.intValue()-1));
+   	scoreHolder.addHardConstraintMatch(kcontext, longExperimants*($total.intValue()-1));
 end
 
 rule "preferencesSoft"
 when
-   Person($aPersonID : getID(), $totalPreference : getSumPreference())
+   Person($aPersonID : ID, $totalPreference : getSumPreference())
    	$totalPreferences : Number() from accumulate(
-    		Allocation(getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, $preference: getPerson().checkPreference(getShift())),
+    		Allocation(shift != null, person != null, person.ID == $aPersonID, $preference: person.checkPreference(shift)),
     		sum($preference)
     	)
 then
  int pref = WeightsReader.PREFERENCES;
- scoreHolder.addSoftConstraintMatch(kcontext, pref*(-$totalPreference  + $totalPreferences.intValue()));
+ scoreHolder.addSoftConstraintMatch(kcontext, pref * (-$totalPreference + $totalPreferences.intValue()));
 end
 
 rule "firstPreferencesHard"
  	when
- 	Person($aPersonID : getID())	
+ 	Person($aPersonID : ID)	
  	$total : Number(intValue<2) from accumulate(
- 		$a:  Allocation(getShift() != null, getPerson() != null, getPerson().getID() == $aPersonID, getPerson().isFirstOrSecondPreference(getShift())),
+ 		$a:  Allocation(shift != null, person != null, person.ID == $aPersonID, person.isFirstOrSecondPreference(shift)),
  		count($a)
  		)
  	then
-   	scoreHolder.addHardConstraintMatch(kcontext,($total.intValue()-1));
+   	scoreHolder.addHardConstraintMatch(kcontext, ($total.intValue()-1));
 end
