@@ -8,7 +8,7 @@
     <name>Summer School Scheduler</name>
     <groupId>uk.ac.diamond</groupId>
     <artifactId>ss-scheduler</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
