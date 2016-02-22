@@ -34,12 +34,10 @@ public class SolutionWriter {
 
 		allocations = solution.getAllocations();
 		Row headerRow = sheet.createRow(0);
-
 		headerRow.createCell(0).setCellValue("Person");
-		headerRow.createCell(1).setCellValue("Period1");
-		headerRow.createCell(2).setCellValue("Period2");
-		headerRow.createCell(3).setCellValue("Period3");
-		headerRow.createCell(4).setCellValue("Period4");
+		for(int j = 1; j <= KeyValuesReader.SHIFTS_PER_STUDENT; j++){
+		    headerRow.createCell(j).setCellValue("Period"+ Integer.toString(j));
+		}
 
 		List<Allocation> allocations = solution.getAllocations();
 		int i = 1;
@@ -50,30 +48,13 @@ public class SolutionWriter {
 			Cell c1 = row.createCell(0);
 			c1.setCellValue(p.getName());
 
-			Cell a0 = row.createCell(1);
-			a0.setCellValue(findPeriod(p, 0));
-			if (checkPreference(p, 0)) {
-				a0.setCellStyle(style);
-			}
-
-			Cell a1 = row.createCell(2);
-			a1.setCellValue(findPeriod(p, 1));
-			if (checkPreference(p, 1)) {
-				a1.setCellStyle(style);
-			}
-
-			Cell a2 = row.createCell(3);
-			a2.setCellValue(findPeriod(p, 2));
-			if (checkPreference(p, 2)) {
-				a2.setCellStyle(style);
-			}
-
-			Cell a3 = row.createCell(4);
-			a3.setCellValue(findPeriod(p, 3));
-			if (checkPreference(p, 3)) {
-				a3.setCellStyle(style);
-			}
-
+			for(int j = 1; j <= KeyValuesReader.SHIFTS_PER_STUDENT; j++){
+			    Cell a0 = row.createCell(j);
+	            a0.setCellValue(findPeriod(p, j-1));
+	            if (checkPreference(p, j-1)) {
+	                a0.setCellStyle(style);
+	            }
+	        }
 			i = i + 1;
 		}
 	}
