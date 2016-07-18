@@ -19,6 +19,7 @@ import uk.ac.diamond.ss.PlannerSolution;
 import uk.ac.diamond.ss.domain.Allocation;
 import uk.ac.diamond.ss.domain.Person;
 import uk.ac.diamond.ss.domain.Shift;
+import uk.ac.diamond.ss.domain.in.KeyValuesReader;
 
 public class SummaryWriter {
 	private Sheet sheet;
@@ -32,42 +33,23 @@ public class SummaryWriter {
 	}
 
 	public void writeAvg(PlannerSolution solution) {
-		Row headerRow = sheet.createRow(0);
+
+	    Row headerRow = sheet.createRow(0);
 		headerRow.createCell(1).setCellValue(
 				"Percentage of people doing that preference");
 		headerRow.createCell(0).setCellValue("Choice");
 
-		Row row = sheet.createRow(1);
-		Cell c1 = row.createCell(0);
-		Cell c11 = row.createCell(1);
-		c1.setCellValue("1 choice");
-		c11.setCellValue(percentage(solution, 1));
-
-		Row row1 = sheet.createRow(2);
-		Cell c2 = row1.createCell(0);
-		Cell c21 = row1.createCell(1);
-		c2.setCellValue("2 choice");
-		c21.setCellValue(percentage(solution, 2));
-
-		Row row2 = sheet.createRow(3);
-		Cell c3 = row2.createCell(0);
-		Cell c31 = row2.createCell(1);
-		c3.setCellValue("3 choice");
-		c31.setCellValue(percentage(solution, 3));
-
-		Row row3 = sheet.createRow(4);
-		Cell c4 = row3.createCell(0);
-		Cell c41 = row3.createCell(1);
-		c4.setCellValue("4 choice");
-		c41.setCellValue(percentage(solution, 4));
-
-		Row row4 = sheet.createRow(5);
-		Cell c5 = row4.createCell(0);
-		Cell c51 = row4.createCell(1);
-		c5.setCellValue("5 choice");
-		c51.setCellValue(percentage(solution, 5));
-
-		Row headerRow1 = sheet.createRow(6);
+		for(int i = 1; i <= KeyValuesReader.MAX_PREFERENCES; i++){
+		    Row row = sheet.createRow(i);
+	        Cell c1 = row.createCell(0);
+	        Cell c11 = row.createCell(1);
+	        c1.setCellValue("choice "+ i);
+	        double percentage = percentage(solution, i);
+	        if (percentage != -1) {
+	            c11.setCellValue(percentage);
+	        }
+		}
+		Row headerRow1 = sheet.createRow(KeyValuesReader.MAX_PREFERENCES + 1);
 		headerRow1.createCell(0).setCellValue("Size of Group");
 		headerRow1.createCell(1).setCellValue("How Many Groups");
 		// calculates size of group for each shift
@@ -94,7 +76,7 @@ public class SummaryWriter {
 			}
 			if (num > 0) {
 				row_num++;
-				Row headerRow1 = sheet.createRow(6 + row_num);
+				Row headerRow1 = sheet.createRow(KeyValuesReader.MAX_PREFERENCES + 1 + row_num);
 				headerRow1.createCell(0).setCellValue(i);
 				headerRow1.createCell(1).setCellValue(num);
 			}
@@ -136,7 +118,10 @@ public class SummaryWriter {
 				used_num++;
 			}
 		}
-		return 100 * ((double) calc / used_num);
+		if (used_num > 0) {
+		    return 100 * ((double) calc / used_num);
+		}
+		return -1;
 	}
 
 }
